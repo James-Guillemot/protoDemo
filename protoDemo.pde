@@ -1,43 +1,33 @@
-PVector tomPos, fredPos, jassiPos, tillyPos, billPos;//stores locations of figurines.
-PVector figSize;
-color bgColour;
+ArrayList<Figurine> figurines;//stores figurines in a list of Figurine type
+Figurine tomPos, fredPos, jassiPos, tillyPos, billPos;//stores figurines as objects
 
-boolean rectOver = false;//IS THE MOUSE OVER ME? TO BE DONE
-boolean circleOver = false;//"""
+PVector figSize;//store the size of all figurines - remove for individually sized figs
 
-void setup() {
-  size(1024, 768);
-  figSize = new PVector(50, 95);
-  bgColour = color(200);
- 
- 
-  circleX = width/2+circleSize/2+10;
-  circleY = height/2;
-  rectX = width/2-rectSize-10;
-  rectY = height/2-rectSize/2;
+PVector mousePos = new PVector();//current position of mouse
+
+color bgColour;//colour of background for window
+PImage bgImg;//background image
+String bgFile = "bg.png";//store file name for background image - bg.png
+
+void setup(){//set up the application
+  size(1024, 768);//set window size
+  figSize = new PVector(50, 95);//set global figurine size - remove or comment if individually sizing
+  bgColour = color(random(255), random(255), random(255));//set a random colour to be the background
+  //bgImg = loadImage(bgFile);//use this to set a background image
   
-  ellipseMode(CENTER);
+  rectMode(CENTER);//position of a rectangle is measured from center rather than 0,0 of the rectangle
 }
 
 void draw() {
-  update(mouseX, mouseY);
-  background(currentColor);
+  //update(mouseX, mouseY);//not sure if needed
+  mousePos.x = mouseX; 
+  mousePos.y = mouseY;
   
-  if (rectOver) {
-    fill(rectHighlight);
-  } else {
-    fill(rectColor);
-  }
-  stroke(255);
-  rect(rectX, rectY, rectSize, rectSize);
+  background(bgColour);
   
-  if (circleOver) {
-    fill(circleHighlight);
-  } else {
-    fill(circleColor);
+  for (Figurine curFig : figurines){//for each figurine in the list
+    curFig.display();
   }
-  stroke(0);
-  ellipse(circleX, circleY, circleSize, circleSize);
 }
 
 void update(int x, int y) {
@@ -52,18 +42,20 @@ void update(int x, int y) {
   }
 }
 
-void mousePressed() {
-  if (circleOver) {
-    currentColor = circleColor;
-  }
-  if (rectOver) {
-    currentColor = rectColor;
-  }
-}
+//void mousePressed() {
+//  mousePos.x = mouseX;
+//  mousePos.y = mouseY;
+//  if (circleOver) {
+//    currentColor = circleColor;
+//  }
+//  if (rectOver) {
+//    currentColor = rectColor;
+//  }
+//}
 
-boolean overRect(int x, int y, int width, int height)  {
+boolean overRect(int x, int y, int width, int height) {
   if (mouseX >= x && mouseX <= x+width && 
-      mouseY >= y && mouseY <= y+height) {
+    mouseY >= y && mouseY <= y+height) {
     return true;
   } else {
     return false;
@@ -79,3 +71,45 @@ boolean overCircle(int x, int y, int diameter) {
     return false;
   }
 }
+
+class Figurine{//store characters to display on screen
+  PVector pos;
+  PVector size;
+  String imageName;
+  PImage img;
+
+  Figurine(int ix, int iy, int iw, int ih, String iFile) {
+    pos = new PVector(ix, iy);
+    size = new PVector(iw, ih);
+    imageName = iFile;
+    img = loadImage(imageName);
+  }
+
+  void display(){
+    updatePos();
+    image(img, pos.x, pos.y);
+  }
+
+  boolean mouseIn() {
+    if (mousePos.x > pos.x - size.x/2 /*if within x bounds*/
+    && mousePos.x > pos.x + size.x/2 
+
+      && mousePos.y > pos.y - size.y/2 /*if within y bounds*/
+    && mousePos.y > pos.y + size.y/2) {
+      return true;
+    }//mouse in me
+
+      else returnfalse;//mouse not in me
+  } 
+
+  void updatePos() {
+    int xDiff = mouseX - pos.x;
+    int yDiff = mouseY - pos.y;
+    if (mouseIn() && mousePressed) {
+      pos.x = mousePos.x;
+      pos.y = mousePos.y;
+    }
+  }
+  
+}//end class figurine
+
