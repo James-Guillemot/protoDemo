@@ -1,75 +1,54 @@
 ArrayList<Figurine> figurines;//stores figurines in a list of Figurine type
-Figurine tomPos, fredPos, jassiPos, tillyPos, billPos;//stores figurines as objects
+Figurine tom, fred, jassi, tilly, bill;//stores figurines as objects
 
-PVector figSize;//store the size of all figurines - remove for individually sized figs
-
-PVector mousePos = new PVector();//current position of mouse
+PVector figSize = new PVector(60, 110);//set global figurine size - remove or comment if individually sizing//store the size of all figurines - remove for individually sized figs
 
 color bgColour;//colour of background for window
 PImage bgImg;//background image
 String bgFile = "bg.png";//store file name for background image - bg.png
 
 void setup(){//set up the application
+  setupFigurines();
+  
   size(1024, 768);//set window size
-  figSize = new PVector(50, 95);//set global figurine size - remove or comment if individually sizing
+   
   bgColour = color(random(255), random(255), random(255));//set a random colour to be the background
   //bgImg = loadImage(bgFile);//use this to set a background image
   
   rectMode(CENTER);//position of a rectangle is measured from center rather than 0,0 of the rectangle
+  imageMode(CENTER);//mirror this with the image mode
 }
 
 void draw() {
-  //update(mouseX, mouseY);//not sure if needed
-  mousePos.x = mouseX; 
-  mousePos.y = mouseY;
-  
   background(bgColour);
+  //image(bgImg, 0, 0);//used for background image
   
   for (Figurine curFig : figurines){//for each figurine in the list
+    curFig.update();
     curFig.display();
   }
 }
 
-void update(int x, int y) {
-  if ( overCircle(circleX, circleY, circleSize) ) {
-    circleOver = true;
-    rectOver = false;
-  } else if ( overRect(rectX, rectY, rectSize, rectSize) ) {
-    rectOver = true;
-    circleOver = false;
-  } else {
-    circleOver = rectOver = false;
-  }
-}
-
-//void mousePressed() {
-//  mousePos.x = mouseX;
-//  mousePos.y = mouseY;
-//  if (circleOver) {
-//    currentColor = circleColor;
-//  }
-//  if (rectOver) {
-//    currentColor = rectColor;
-//  }
-//}
-
-boolean overRect(int x, int y, int width, int height) {
-  if (mouseX >= x && mouseX <= x+width && 
-    mouseY >= y && mouseY <= y+height) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-boolean overCircle(int x, int y, int diameter) {
-  float disX = x - mouseX;
-  float disY = y - mouseY;
-  if (sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-    return true;
-  } else {
-    return false;
-  }
+void setupFigurines(){
+  figurines = new ArrayList<Figurine>();//initialize figurines list
+  
+  tom = new Figurine(60, 80, figSize.x, figSize.y, "tom.png");
+  figurines.add(tom);
+  
+  /*
+  fred = new Figurine(120, 80, figSize.x, figSize.y, "fred.png");
+  figurines.add(fred);
+  
+  jassi = new Figurine(180, 80, figSize.x, figSize.y, "jassi.png");
+  figurines.add(jassi);
+  
+  tilly = new Figurine(240, 80, figSize.x, figSize.y, "tilly.png");
+  figurines.add(tilly);
+  
+  bill = new Figurine(300, 80, figSize.x, figSize.y, "bill.png");
+  figurines.add(bill);
+  
+  */
 }
 
 class Figurine{//store characters to display on screen
@@ -78,7 +57,7 @@ class Figurine{//store characters to display on screen
   String imageName;
   PImage img;
 
-  Figurine(int ix, int iy, int iw, int ih, String iFile) {
+  Figurine(int ix, int iy, float iw, float ih, String iFile) {
     pos = new PVector(ix, iy);
     size = new PVector(iw, ih);
     imageName = iFile;
@@ -86,28 +65,29 @@ class Figurine{//store characters to display on screen
   }
 
   void display(){
-    updatePos();
-    image(img, pos.x, pos.y);
+    image(img, pos.x, pos.y, size.x, size.y);
   }
 
   boolean mouseIn() {
-    if (mousePos.x > pos.x - size.x/2 /*if within x bounds*/
-    && mousePos.x > pos.x + size.x/2 
+    if (mouseX >= pos.x - size.x/2 /*if within x bounds*/
+    && mouseX <= pos.x + size.x/2 
 
-      && mousePos.y > pos.y - size.y/2 /*if within y bounds*/
-    && mousePos.y > pos.y + size.y/2) {
+      && mouseY >= pos.y - size.y/2 /*if within y bounds*/
+    && mouseY <= pos.y + size.y/2) {
       return true;
     }//mouse in me
 
-      else returnfalse;//mouse not in me
+      else return false;//mouse not in me
   } 
 
-  void updatePos() {
-    int xDiff = mouseX - pos.x;
-    int yDiff = mouseY - pos.y;
+  void update() {
+    PVector diff = new PVector();
+    diff.x = mouseX - pos.x;
+    diff.y = mouseY - pos.y;
+    println("x: " + diff.x + ", y: " + diff.y);
     if (mouseIn() && mousePressed) {
-      pos.x = mousePos.x;
-      pos.y = mousePos.y;
+      pos.x = mouseX + diff.x;
+      pos.y = mouseY + diff.y;
     }
   }
   
