@@ -1,0 +1,42 @@
+[
+  {
+    "w": 60,
+    "file": "tom.png",
+    "name": "placeholder",
+    "h": 110,
+    "y": 80,
+    "x": 60
+  },
+  {
+    "w": 60,
+    "file": "fred.png",
+    "name": "placeholder",
+    "h": 110,
+    "y": 80,
+    "x": 120
+  },
+  {
+    "w": 60,
+    "file": "jassi.png",
+    "name": "placeholder",
+    "h": 110,
+    "y": 80,
+    "x": 180
+  },
+  {
+    "w": 60,
+    "file": "tilly.png",
+    "name": "placeholder",
+    "h": 110,
+    "y": 80,
+    "x": 240
+  },
+  {
+    "w": 60,
+    "file": "bill.png",
+    "name": "placeholder",
+    "h": 110,
+    "y": 80,
+    "x": 300
+  }
+]

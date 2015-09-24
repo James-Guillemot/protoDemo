@@ -1,4 +1,5 @@
 ArrayList<Figurine> figurines;//stores figurines in a list of Figurine type
+JSONArray figsJSON;
 Figurine tom, fred, jassi, tilly, bill;//stores figurines as objects
 
 PVector figSize = new PVector(60, 110);//set global figurine size - remove or comment if individually sizing//store the size of all figurines - remove for individually sized figs
@@ -49,9 +50,43 @@ void setupFigurines(){
  
 }
 
+void saveExit(){
+  populateJSON();
+  saveJSONArray(figsJSON, "figurines.JSON");
+  exit();
+}
+
+void populateJSON(){
+  figsJSON = new JSONArray();
+  
+  for (int i = 0; i < figurines.size(); i++) {
+    Figurine f = figurines.get(i);
+    
+    JSONObject figurine = new JSONObject();
+
+    figurine.setString("name", f.name);
+    figurine.setFloat("x", f.pos.x);
+    figurine.setFloat("y", f.pos.y);
+    figurine.setFloat("w", f.size.x);
+    figurine.setFloat("h", f.size.y);
+    figurine.setString("file", f.imageName);//
+
+    figsJSON.setJSONObject(i, figurine);//add to array
+  }
+}
+
+void keyPressed(){
+  if (key == 'q'){
+     println("SAVED AND EXIT!");
+     saveExit(); 
+  } 
+  
+}
+
 class Figurine{//store characters to display on screen
   PVector pos;
   PVector size;
+  String name = "placeholder";
   String imageName;
   PImage img;
   PVector diff ;
@@ -72,7 +107,7 @@ class Figurine{//store characters to display on screen
     if (mouseX >= pos.x - size.x/2 /*if within x bounds*/
     && mouseX <= pos.x + size.x/2 
 
-      && mouseY >= pos.y - size.y/2 /*if within y bounds*/
+    && mouseY >= pos.y - size.y/2 /*if within y bounds*/
     && mouseY <= pos.y + size.y/2) {
       return true;
     }//mouse in me
