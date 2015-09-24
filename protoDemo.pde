@@ -35,7 +35,6 @@ void setupFigurines(){
   tom = new Figurine(60, 80, figSize.x, figSize.y, "tom.png");
   figurines.add(tom);
   
-  /*
   fred = new Figurine(120, 80, figSize.x, figSize.y, "fred.png");
   figurines.add(fred);
   
@@ -47,8 +46,7 @@ void setupFigurines(){
   
   bill = new Figurine(300, 80, figSize.x, figSize.y, "bill.png");
   figurines.add(bill);
-  
-  */
+ 
 }
 
 class Figurine{//store characters to display on screen
@@ -56,16 +54,18 @@ class Figurine{//store characters to display on screen
   PVector size;
   String imageName;
   PImage img;
+  PVector diff ;
 
   Figurine(int ix, int iy, float iw, float ih, String iFile) {
     pos = new PVector(ix, iy);
     size = new PVector(iw, ih);
     imageName = iFile;
     img = loadImage(imageName);
+    diff = new PVector(0,0);
   }
 
   void display(){
-    image(img, pos.x, pos.y, size.x, size.y);
+      image(img, pos.x, pos.y, size.x, size.y);    
   }
 
   boolean mouseIn() {
@@ -81,15 +81,16 @@ class Figurine{//store characters to display on screen
   } 
 
   void update() {
-    PVector diff = new PVector();
-    diff.x = mouseX - pos.x;
-    diff.y = mouseY - pos.y;
+    
     println("x: " + diff.x + ", y: " + diff.y);
     if (mouseIn() && mousePressed) {
-      pos.x = mouseX + diff.x;
-      pos.y = mouseY + diff.y;
-    }
+      rect(mouseX, mouseY, 10,10);
+      rect(pos.x, pos.y, 10,10);
+      diff.x = mouseX - pos.x;
+      diff.y = mouseY - pos.y;
+      pos.x = mouseX + diff.x/2;
+      pos.y = mouseY + diff.y/2;
+     }
   }
-  
 }//end class figurine
 
