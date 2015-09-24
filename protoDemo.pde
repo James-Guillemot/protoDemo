@@ -52,7 +52,7 @@ void setupFigurines(){
 
 void saveExit(){
   populateJSON();
-  saveJSONArray(figsJSON, "figurines.JSON");
+  saveJSONArray(figsJSON, "data/figurines.JSON");
   exit();
 }
 
