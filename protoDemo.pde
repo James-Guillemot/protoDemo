@@ -1,6 +1,7 @@
 ArrayList<Figurine> figurines;//stores figurines in a list of Figurine type
 ArrayList<Wall> walls;//stores walls in a list of Wall type
-ArrayList<Button> buttons;//stores walls in a list of Wall type
+ArrayList<Carpet> carpets;//stores carpets in a list of Carpet type
+ArrayList<Button> buttons;//stores buttons in a list of Button type
 
 Figurine currentFigurine;//stores an address to the figurine currently in use
 Button currentButton;//stores an address to the figurine currently in use
@@ -22,11 +23,11 @@ void setup(){//set up the application
   walls = new ArrayList<Wall>();//initialize walls list
   buttons = new ArrayList<Button>();//initialize walls list
 
- // setupFigurines();
+  //setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
   //setupWalls();//******
   setupGUI();//******
   
-  size(1440, 900);//set window size
+  size(1400, 900);//set window size
    currentFigurine = new Figurine();
   bgColour = color(random(255), random(255), random(255));//set a random colour to be the background
   //bgImg = loadImage(bgFile);//use this to set a background image
@@ -37,13 +38,13 @@ void setup(){//set up the application
 //------------------------------------------
 void draw() {
   background(bgColour);
-  rect(0,0,200,height);
+  rect(0,0,200,height);//draw area on left
   
   //image(bgImg, 0, 0);//used for background image
   
-  /*for (Wall curWall : walls){//for each figurine in the list
+  for (Wall curWall : walls){//for each figurine in the list
     curWall.display();//draw the current figurine (one by one)
-  }*/
+  }
   for (Button curBut : buttons){//for each figurine in the list
     curBut.display();//draw the current figurine (one by one)
   }
@@ -124,7 +125,7 @@ void keyPressed(){
   switch(key){
     default: println("INVALID OPTION SELECTED! Press 'H' for key bindings"); break;
     case 'q': println("SAVED AND EXITED!"); saveExit(); break;
-    case 'w': println("LOADING WALLS!"); readWallsJSON(); break;
+    case 'w': println("LOADING WALLS!"); walls = readWallsJSON(); break;
     case 'f': println("LOADING FIGURINES!"); figurines = readFigsJSON(); break;
   } 
 }
@@ -133,26 +134,6 @@ void keyPressed(){
 
 //JSON input and output
 //==========================================
-ArrayList<Wall> readWallsJSON(){
-  ArrayList<Wall> input = new ArrayList<Wall>();
-  JSONArray wallJSON = loadJSONArray("data/wall.JSON");
-  Wall w = new Wall();
-
-  for (int i = 0; i < wallJSON.size(); i++) {
-
-    JSONObject curW = wallJSON.getJSONObject(i);
-
-    w.pos.x = curW.getFloat("x");
-    w.pos.y = curW.getFloat("y");
-    w.size.x = curW.getFloat("w");
-    w.size.y = curW.getFloat("h"); 
-    
-    input.add(w);
-  }
-  return input;
-}
-//------------------------------------------
-
 ArrayList<Figurine> readFigsJSON(){
   ArrayList<Figurine> input = new ArrayList<Figurine>();
   JSONArray figsJSON = loadJSONArray("data/figs.JSON");
@@ -177,6 +158,28 @@ ArrayList<Figurine> readFigsJSON(){
   return input;
 }
 //------------------------------------------
+
+ArrayList<Wall> readWallsJSON(){
+  ArrayList<Wall> input = new ArrayList<Wall>();
+  JSONArray wallJSON = loadJSONArray("data/walls.JSON");
+  Wall w;
+
+  for (int i = 0; i < wallJSON.size(); i++) {
+
+    JSONObject curW = wallJSON.getJSONObject(i);
+    
+    w = new Wall();
+    w.pos.x = curW.getFloat("x");
+    w.pos.y = curW.getFloat("y");
+    w.size.x = curW.getFloat("w");
+    w.size.y = curW.getFloat("h"); 
+    
+    input.add(w);
+  }
+  return input;
+}
+//------------------------------------------
+
 
 JSONArray populateFigsJSON(){
   JSONArray output = new JSONArray();
@@ -204,7 +207,7 @@ JSONArray populateWallsJSON(){
   JSONArray output = new JSONArray();
   
   if (walls.size() == 0){}else{
-  for (int i = 0; i < figurines.size(); i++) {
+  for (int i = 0; i < walls.size(); i++) {
     Wall w = walls.get(i);
     
     JSONObject wall = new JSONObject();
@@ -232,7 +235,7 @@ JSONArray [] genJSONs(){
 
 void saveJSONs(JSONArray toSave[]){
   saveJSONArray(toSave[0], "data/figs.JSON");
- // saveJSONArray(toSave[1], "data/walls.JSON");//not ready to be used  
+  saveJSONArray(toSave[1], "data/walls.JSON");//not ready to be used  
 }
 //end of JSON input and output
 //==========================================

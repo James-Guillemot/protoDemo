@@ -38,7 +38,8 @@ class Button{//store buttons to display on screen
     rect(pos.x, pos.y, size.x, size.y);//otherwise draw my background colour
     if (bg != null){image(bg, pos.x, pos.y, size.x/2, size.y/2);}//if I have a background image, use that on top
     fill(textCol);
-    textSize(18);textAlign(CENTER, CENTER);
+    textSize(18);
+    textAlign(CENTER, CENTER);
     text(text, pos.x, pos.y, size.x, size.y);    
     fill(#FFFFFF);
   }
