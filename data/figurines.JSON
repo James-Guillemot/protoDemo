@@ -2,41 +2,41 @@
   {
     "w": 60,
     "file": "tom.png",
-    "name": "placeholder",
+    "name": "Tom",
     "h": 110,
-    "y": 80,
-    "x": 60
+    "y": 60,
+    "x": 50
   },
   {
     "w": 60,
     "file": "fred.png",
-    "name": "placeholder",
+    "name": "Fred",
     "h": 110,
-    "y": 80,
-    "x": 120
+    "y": 69,
+    "x": 307
   },
   {
     "w": 60,
     "file": "jassi.png",
-    "name": "placeholder",
+    "name": "Jassi",
     "h": 110,
-    "y": 80,
-    "x": 180
+    "y": 180,
+    "x": 50
   },
   {
     "w": 60,
     "file": "tilly.png",
-    "name": "placeholder",
+    "name": "Tilly",
     "h": 110,
-    "y": 80,
-    "x": 240
+    "y": 350,
+    "x": 426
   },
   {
     "w": 60,
     "file": "bill.png",
-    "name": "placeholder",
+    "name": "Bill",
     "h": 110,
-    "y": 127,
-    "x": 420
+    "y": 168,
+    "x": 689
   }
 ]
