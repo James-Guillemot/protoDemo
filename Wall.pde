@@ -1,45 +1,20 @@
 class Wall{//store walls to display on screen
   PVector pos;
   PVector size;
+  color lineCol, bgCol;
  
-  Figurine() {}
+  Wall() {}
 
-  Figurine(String iName, int ix, int iy, float iw, float ih, String iFile) {
+  Wall(int ix, int iy, float iw, float ih) {
     pos = new PVector(ix, iy);
     size = new PVector(iw, ih);
-    name = iName;
-    imageName = iFile;
-    img = loadImage(imageName);
-    diff = new PVector(0,0);
   }
 
   void display(){
-    image(img, pos.x, pos.y, size.x, size.y);    
-            //image(img, xpos, ypos, size.x, size.y);    
-
+    fill(bgCol);
+    stroke(lineCol);
+    rect(pos.x, pos.y, size.x, size.y);//otherwise draw my background colour
   }
 
-  boolean mouseIn() {
-    if (mouseX > pos.x - size.x/2 /*if within x bounds*/
-    && mouseX < pos.x + size.x/2 
-    && mouseY > pos.y - size.y/2 /*if within y bounds*/
-    && mouseY < pos.y + size.y/2 
-    && !figMoving) {//and another figurine not being moved
-      locked = true;
-      return true;
-    }//mouse in me
-    else {return false;}//mouse not in me
-  } 
-
-  /*void update() {
-    
-  //  println("x: " + diff.x + ", y: " + diff.y);
-    if (mouseIn() && mousePressed) {
-      
-      pos.x = mouseX;
-      pos.y = mouseY;
-      //xpos=(mouseX/8)*8;
-      //ypos=(mouseY/8)*8; 
-     }
-  }*/
-}//end class figurine
+  
+}//end class Wall

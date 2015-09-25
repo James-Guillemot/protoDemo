@@ -1,6 +1,7 @@
 ArrayList<Figurine> figurines;//stores figurines in a list of Figurine type
-JSONArray figsJSON;
-Figurine tom, fred, jassi, tilly, bill, currentFigurine;//stores figurines as objects
+ArrayList<Wall> walls;//stores walls in a list of Wall type
+
+Figurine currentFigurine;//stores an address to the figurine currently in use
 
 PVector figSize = new PVector(60, 110);//set global figurine size - remove or comment if individually sizing//store the size of all figurines - remove for individually sized figs
 PVector diff;
@@ -35,6 +36,8 @@ void draw() {
 }
 
 void setupFigurines(){
+  Figurine tom, fred, jassi, tilly, bill//stores figurines as objects
+  
   figurines = new ArrayList<Figurine>();//initialize figurines list
   
   tom = new Figurine("Tom", 50, 60, figSize.x, figSize.y, "tom.png");
@@ -55,9 +58,8 @@ void setupFigurines(){
 }
 
 void saveExit(){
-  populateJSON();
-  saveJSONArray(figsJSON, "data/figurines.JSON");
-  exit();
+  saveJSONs(genJSONs());//save generated JSON files
+  exit();//stop runtime
 }
 
 void mousePressed() {
@@ -69,16 +71,6 @@ void mousePressed() {
       diff.y = mouseY - currentFigurine.pos.y;
     }
   }
-  
-//println(figMoving);
- ///if(overBox) { 
-  //  locked = true; 
- //   fill(255, 255, 255);
-  //} else {
- //   locked = false;
- // }
- // diff.x = mouseX-bx; 
-  ///////diff.y = mouseY-by; 
 }
 void mouseDragged() {
   if (figMoving){
@@ -91,9 +83,9 @@ void mouseReleased() {
  //println(figMoving);
 
 }
-ArrayList<Wall> readFigJSON(){
-  ArrayList<Figurine> input = new ArrayList<Figurine>();
-  figsJSON = new JSONArray();
+ArrayList<Wall> readBgJSON(){
+  ArrayList<Wall> input = new ArrayList<Wall>();
+  JSONArray figsJSON = new JSONArray();
   
   for (int i = 0; i < figurines.size(); i++) {
     Figurine f = figurines.get(i);
@@ -115,7 +107,7 @@ ArrayList<Wall> readFigJSON(){
 
 ArrayList<Figurine> readFigJSON(){
   ArrayList<Figurine> input = new ArrayList<Figurine>();
-  figsJSON = new JSONArray();
+  JSONArray figsJSON = new JSONArray();
   
   for (int i = 0; i < figurines.size(); i++) {
     Figurine f = figurines.get(i);
@@ -135,8 +127,8 @@ ArrayList<Figurine> readFigJSON(){
   return input;
 }
 
-void populateJSON(){
-  figsJSON = new JSONArray();
+JSONArray populateFigsJSON(){
+  JSONArray figsJSON = new JSONArray();
   
   for (int i = 0; i < figurines.size(); i++) {
     Figurine f = figurines.get(i);
@@ -152,6 +144,41 @@ void populateJSON(){
 
     figsJSON.setJSONObject(i, figurine);//add to array
   }
+  
+  return figsJSON;
+}
+
+JSONArray populateWallsJSON(){
+  JSONArray wallsJSON = new JSONArray();
+  
+  for (int i = 0; i < figurines.size(); i++) {
+    Wall w = walls.get(i);
+    
+    JSONObject wall = new JSONObject();
+
+    figurine.setFloat("x", f.pos.x);
+    figurine.setFloat("y", f.pos.y);
+    figurine.setFloat("w", f.size.x);
+    figurine.setFloat("h", f.size.y);
+
+    figsJSON.setJSONObject(i, wall);//add to array
+  }
+  
+  return wallsJSON;
+}
+
+JSONArray [] genJSONs(){
+  JSONArray toSave[] = new JSONArray[2];
+  
+  toSave[0] = populateFigsJSON();
+  toSave[1] = populateWallsJSON();
+
+  return toSave;
+}
+
+void saveJSONs(JSONArray toSave[]){
+  saveJSONArray(toSave[0], "data/figurines.JSON");
+  saveJSONArray(toSave[1], "data/walls.JSON");  
 }
 
 void keyPressed(){
