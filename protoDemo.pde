@@ -23,7 +23,7 @@ void setup(){//set up the application
   walls = new ArrayList<Wall>();//initialize walls list
   buttons = new ArrayList<Button>();//initialize walls list
 
-  //setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
+  setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
   //setupWalls();//******
   setupGUI();//******
   
