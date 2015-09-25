@@ -1,15 +1,7 @@
-class Figurine{//store characters to display on screen
+class Wall{//store walls to display on screen
   PVector pos;
   PVector size;
-  boolean locked = false;
-  
-  String name;
-  String imageName;
-  PImage img;
-  
-  int xpos;
-  int ypos;
-  
+ 
   Figurine() {}
 
   Figurine(String iName, int ix, int iy, float iw, float ih, String iFile) {

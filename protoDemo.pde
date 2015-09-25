@@ -91,8 +91,48 @@ void mouseReleased() {
  //println(figMoving);
 
 }
-void readJSON(){
+ArrayList<Wall> readFigJSON(){
+  ArrayList<Figurine> input = new ArrayList<Figurine>();
+  figsJSON = new JSONArray();
   
+  for (int i = 0; i < figurines.size(); i++) {
+    Figurine f = figurines.get(i);
+    
+    JSONObject figurine = new JSONObject();
+
+    figurine.setString("name", f.name);
+    figurine.setFloat("x", f.pos.x);
+    figurine.setFloat("y", f.pos.y);
+    figurine.setFloat("w", f.size.x);
+    figurine.setFloat("h", f.size.y);
+    figurine.setString("file", f.imageName);//
+
+    figsJSON.setJSONObject(i, figurine);//add to array
+    
+  }
+  return input;
+}
+
+ArrayList<Figurine> readFigJSON(){
+  ArrayList<Figurine> input = new ArrayList<Figurine>();
+  figsJSON = new JSONArray();
+  
+  for (int i = 0; i < figurines.size(); i++) {
+    Figurine f = figurines.get(i);
+    
+    JSONObject figurine = new JSONObject();
+
+    figurine.setString("name", f.name);
+    figurine.setFloat("x", f.pos.x);
+    figurine.setFloat("y", f.pos.y);
+    figurine.setFloat("w", f.size.x);
+    figurine.setFloat("h", f.size.y);
+    figurine.setString("file", f.imageName);//
+
+    figsJSON.setJSONObject(i, figurine);//add to array
+    
+  }
+  return input;
 }
 
 void populateJSON(){
@@ -115,9 +155,11 @@ void populateJSON(){
 }
 
 void keyPressed(){
-  if (key == 'q'){
-     println("SAVED AND EXITED!");
-     saveExit(); 
+  switch(key){
+    default: println("INVALID OPTION SELECTED! Press 'H' for key bindings"); break;
+    case 'q': println("SAVED AND EXITED!"); saveExit(); break;
+    case 'b': println("LOADING BACKGROUND!"); readBgJSON(); break;
+    case 'f': println("SAVED AND EXITED!"); figurines = readFigJSON(); break;
   } 
   
 }
