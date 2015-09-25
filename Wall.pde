@@ -3,7 +3,10 @@ class Wall{//store walls to display on screen
   PVector size;
   color lineCol, bgCol;
  
-  Wall() {}
+  Wall() {
+  
+  
+  }
 
   Wall(int ix, int iy, float iw, float ih) {
     pos = new PVector(ix, iy);

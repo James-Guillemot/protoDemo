@@ -7,24 +7,27 @@ class Figurine{//store characters to display on screen
   String imageName;
   PImage img;
   
-  int xpos;
-  int ypos;
-  
-  Figurine() {}
+  Figurine() {
+    pos = new PVector();
+    size = new PVector();
+    img = new PImage();
+    
+  }
 
-  Figurine(String iName, int ix, int iy, float iw, float ih, String iFile) {
+  Figurine(String iName, float ix, float iy, float iw, float ih, String iFile) {
     pos = new PVector(ix, iy);
     size = new PVector(iw, ih);
     name = iName;
     imageName = iFile;
     img = loadImage(imageName);
-    diff = new PVector(0,0);
+   // diff = new PVector(0,0);
   }
 
   void display(){
+    rectMode(RADIUS);//position of a rectangle is measured from center rather than 0,0 of the rectangle
+    imageMode(CENTER);//mirror this with the image mode
     image(img, pos.x, pos.y, size.x, size.y);    
-            //image(img, xpos, ypos, size.x, size.y);    
-
+    
   }
 
   boolean mouseIn() {
