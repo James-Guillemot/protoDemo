@@ -28,6 +28,7 @@ void setup(){//set up the application
 
   setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
   //setupWalls();//******
+  setupCarpets();
   setupGUI();//******
   
   size(1400, 900, P2D);//set window size
@@ -62,7 +63,7 @@ void draw() {
 
 //program setup 
 //==========================================
-void setupFigurines(){//creates figurines --will not be used when figurines are stored in JSON for initialisation too
+void setupFigurines(){//creates figurines for initialisation too
   Figurine tom, fred, jassi, tilly, bill;//stores figurines as objects
   
   tom = new Figurine("Tom", 50, 60, figSize.x, figSize.y, "tom.png");
@@ -80,6 +81,33 @@ void setupFigurines(){//creates figurines --will not be used when figurines are 
   bill = new Figurine("Bill", 50, 300, figSize.x, figSize.y, "bill.png");
   figurines.add(bill);
 }
+//------------------------------------------
+
+void setupCarpets(){//creates initial carpets
+  Carpet c1,c2,c3;//stores figurines as objects
+  ArrayList<PVector> a1 = new ArrayList<PVector>();
+  //ArrayList<PVector> a2 = new ArrayList<PVector>();
+  //ArrayList<PVector> a3 = new ArrayList<PVector>();
+  
+  a1.add(new PVector(280, 50));
+  a1.add(new PVector(805, 50));
+  a1.add(new PVector(805, 285));
+  a1.add(new PVector(500, 285));
+  a1.add(new PVector(500, 485));
+  a1.add(new PVector(280, 485));
+  //a1.add(new PVector(805, 100));
+  
+  
+  c1 = new Carpet(a1, "room 1");
+  //c2 = new Carpet(a2, "room 2");
+  //c3 = new Carpet(a3, "room 3");
+
+  carpets.add(c1);
+  //carpets.add(c2);
+  //carpets.add(c3);
+
+}
+//------------------------------------------
 
 void setupGUI(){//generates a GUI    --store buttons in JSON too
   //Button addFig = new Button(100, 900-50, 50, 15, "Add");
@@ -132,8 +160,8 @@ void keyPressed(){
     default: println("INVALID OPTION SELECTED! Press 'H' for key bindings"); break;
     case 'q': println("SAVED AND EXITED!"); saveExit(); break;
     case 'Q': println("SAVED AND EXITED!"); saveExit(); break;
-    case 'r': println("LOADING ROOMS!"); walls = readWallsJSON(); carpets = readCarpetsJSON(); break;
-    case 'R': println("LOADING ROOMS!"); walls = readWallsJSON(); carpets = readCarpetsJSON(); break;
+    case 'r': println("LOADING ROOMS!"); walls = readWallsJSON(); carpets = readCarpsJSON(); break;
+    case 'R': println("LOADING ROOMS!"); walls = readWallsJSON(); carpets = readCarpsJSON(); break;
     case 'f': println("LOADING FIGURINES!"); figurines = readFigsJSON(); break;
     case 'F': println("LOADING FIGURINES!"); figurines = readFigsJSON(); break;
     case 'h': println("Help: press 'R' to load rooms!"); println("Press 'F' to load figurines!"); println("Press 'Q' to quit and save figurines & walls!"); break;
@@ -193,25 +221,31 @@ ArrayList<Wall> readWallsJSON(){
 }
 //------------------------------------------
 
-ArrayList<Carpet> readCarpetsJSON(){
-  ArrayList<Carpet> input = new ArrayList<Carpet>();
-  JSONArray carpJSON = loadJSONArray("data/carps.JSON");
+ArrayList<Carpet> readCarpsJSON(){
+  carpets.clear();
+  ArrayList<Carpet> input = new ArrayList<Carpet>();//store all carpets
+  JSONArray carpsJSON = loadJSONArray("data/carps.JSON");
   Carpet c;
-  PVector vertices[]; 
-  vertices = new PVector[50];
   
-  for (int i = 0; i < carpJSON.size(); i++) {
-
-    JSONObject curC = carpJSON.getJSONObject(i);
+  for (int i = 0; i < carpsJSON.size(); i++) {//iterate through carpets list
+           
+    JSONObject carpet = carpsJSON.getJSONObject(i);//store the carpet
+    c = new Carpet();
+     
+    c.roomName = carpet.getString("name");//add name of room to carpet JSON object
     
-   /* for(int j = 0; j< ; j++){
-      point = new PVector(x, y);
-    
-      vertices[i] = point;
-    }
-    
-    c = new Carpet(vertices, "Room 1");
-    input.add(c);*/
+    JSONArray iVert = carpet.getJSONArray("vertices");//store the vertices of the carpet
+     
+    for (int j = 0; j < iVert.size(); j++) {//for all vertices in the current carpet
+      JSONObject vertex = iVert.getJSONObject(j);
+      PVector v = new PVector(vertex.getFloat("x"), vertex.getFloat("y"));
+      
+      //println(vertex);
+      
+      c.vertices.add(v);
+    }             
+    carpets.add(c);
+    println(carpets.get(i).vertices);
   }
   return input;
 }
@@ -261,38 +295,46 @@ JSONArray populateWallsJSON(){
 //------------------------------------------
 
 JSONArray populateCarpsJSON(){
-  JSONArray output = new JSONArray();
+  JSONArray output = new JSONArray();//store all carpets
   
-  if (carpets.size() == 0){}else{
-  for (int i = 0; i < carpets.size(); i++) {
-    Carpet c = carpets.get(i);
-    
-    JSONObject carpet = new JSONObject();
+  if (carpets.size() != 0){//if there are carpets
+    for (int i = 0; i < carpets.size(); i++) {//iterate through carpets list
+      Carpet c = carpets.get(i);//current carpet in use
+      
+      JSONObject carpet = new JSONObject();//store the carpet
+      JSONArray vertices = new JSONArray();//store the vertices of the carpet
 
-    /*carpet.setFloat("x", w.pos.x);
-    carpet.setFloat("y", w.pos.y);//NEED A LOOP HERE TO ADD ALL ITEMS FROM VERTICES ARRAY
-    carpet.setFloat("w", w.size.x);
-    carpet.setFloat("h", w.size.y);
-*/
-    output.setJSONObject(i, carpet);//add to array
-  }
+      for (int j = 0; j < c.vertices.size(); j++) {//for all vertices in the current carpet
+        JSONObject v = new JSONObject();
+        v.setFloat("x", c.vertices.get(j).x);
+        v.setFloat("y", c.vertices.get(j).y);
+        vertices.setJSONObject(j, v);
+      }  
+      
+      carpet.setJSONArray("vertices" , vertices);//add vertices to carpet JSON object
+      carpet.setString("name", c.roomName);//add name of room to carpet JSON object
+      
+      output.setJSONObject(i,carpet);//add carpet JSON object to array
+    }
   }
   return output;
 }
 //------------------------------------------
 
 JSONArray [] genJSONs(){
-  JSONArray toSave[] = new JSONArray[2];
+  JSONArray toSave[] = new JSONArray[4];
   
   toSave[0] = populateFigsJSON();
   toSave[1] = populateWallsJSON();
+  toSave[2] = populateCarpsJSON();
 
   return toSave;
 }
 
 void saveJSONs(JSONArray toSave[]){
   saveJSONArray(toSave[0], "data/figs.JSON");
-  saveJSONArray(toSave[1], "data/walls.JSON");//not ready to be used  
+  saveJSONArray(toSave[1], "data/walls.JSON");
+  saveJSONArray(toSave[2], "data/carps.JSON");
 }
 //end of JSON input and output
 //==========================================
