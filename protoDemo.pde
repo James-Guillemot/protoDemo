@@ -146,6 +146,7 @@ void keyPressed(){
 //JSON input and output
 //==========================================
 ArrayList<Figurine> readFigsJSON(){
+  figurines.clear();
   ArrayList<Figurine> input = new ArrayList<Figurine>();
   JSONArray figsJSON = loadJSONArray("data/figs.JSON");
   Figurine f;
@@ -193,7 +194,6 @@ ArrayList<Wall> readWallsJSON(){
 //------------------------------------------
 
 ArrayList<Carpet> readCarpetsJSON(){
-  carpets.clear();//clear carpets list
   ArrayList<Carpet> input = new ArrayList<Carpet>();
   JSONArray carpJSON = loadJSONArray("data/carps.JSON");
   Carpet c;
@@ -218,7 +218,6 @@ ArrayList<Carpet> readCarpetsJSON(){
 //------------------------------------------
 
 JSONArray populateFigsJSON(){
-  figurines.clear();//clear figurines list
   JSONArray output = new JSONArray();
   
   for (int i = 0; i < figurines.size(); i++) {
