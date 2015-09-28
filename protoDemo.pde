@@ -1,3 +1,5 @@
+import boofcv.processing.*;
+
 ArrayList<Figurine> figurines;//stores figurines in a list of Figurine type
 ArrayList<Wall> walls;//stores walls in a list of Wall type
 ArrayList<Carpet> carpets;//stores carpets in a list of Carpet type
@@ -126,12 +128,12 @@ void keyPressed(){
     default: println("INVALID OPTION SELECTED! Press 'H' for key bindings"); break;
     case 'q': println("SAVED AND EXITED!"); saveExit(); break;
     case 'Q': println("SAVED AND EXITED!"); saveExit(); break;
-    case 'w': println("LOADING WALLS!"); walls = readWallsJSON(); break;
-    case 'W': println("LOADING WALLS!"); walls = readWallsJSON(); break;
+    case 'r': println("LOADING ROOMS!"); walls = readWallsJSON(); carpets = readCarpetsJSON(); break;
+    case 'R': println("LOADING ROOMS!"); walls = readWallsJSON(); carpets = readCarpetsJSON(); break;
     case 'f': println("LOADING FIGURINES!"); figurines = readFigsJSON(); break;
     case 'F': println("LOADING FIGURINES!"); figurines = readFigsJSON(); break;
-    case 'h': println("Help: press 'W' to load walls from JSON file!"); println("Press 'W' to load walls from JSON file!"); break;
-    case 'H': println("Help: press 'W' to load walls from JSON file!"); break;
+    case 'h': println("Help: press 'R' to load rooms!"); println("Press 'F' to load figurines!"); println("Press 'Q' to quit and save figurines & walls!"); break;
+    case 'H': println("Help: press 'R' to load rooms!"); println("Press 'F' to load figurines!"); println("Press 'Q' to quit and save figurines & walls!"); break;
   } 
 }
 //end of action handlers
