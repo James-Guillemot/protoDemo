@@ -23,13 +23,14 @@ String bgFile = "bg.png";//store file name for background image - bg.png
 void setup(){//set up the application
   figurines = new ArrayList<Figurine>();//initialize figurines list
   walls = new ArrayList<Wall>();//initialize walls list
+  carpets = new ArrayList<Carpet>();//initialize walls list
   buttons = new ArrayList<Button>();//initialize walls list
 
   setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
   //setupWalls();//******
   setupGUI();//******
   
-  size(1400, 900);//set window size
+  size(1400, 900, P2D);//set window size
    currentFigurine = new Figurine();
   bgColour = color(random(255), random(255), random(255));//set a random colour to be the background
   //bgImg = loadImage(bgFile);//use this to set a background image
@@ -46,6 +47,9 @@ void draw() {
   
   for (Wall curWall : walls){//for each figurine in the list
     curWall.display();//draw the current figurine (one by one)
+  }
+  for (Carpet curCarp : carpets){//for each figurine in the list
+    curCarp.display();//draw the current figurine (one by one)
   }
   for (Button curBut : buttons){//for each figurine in the list
     curBut.display();//draw the current figurine (one by one)
@@ -167,6 +171,7 @@ ArrayList<Figurine> readFigsJSON(){
 //------------------------------------------
 
 ArrayList<Wall> readWallsJSON(){
+  walls.clear();//clear walls list
   ArrayList<Wall> input = new ArrayList<Wall>();
   JSONArray wallJSON = loadJSONArray("data/walls.JSON");
   Wall w;
@@ -187,8 +192,33 @@ ArrayList<Wall> readWallsJSON(){
 }
 //------------------------------------------
 
+ArrayList<Carpet> readCarpetsJSON(){
+  carpets.clear();//clear carpets list
+  ArrayList<Carpet> input = new ArrayList<Carpet>();
+  JSONArray carpJSON = loadJSONArray("data/carps.JSON");
+  Carpet c;
+  PVector vertices[]; 
+  vertices = new PVector[50];
+  
+  for (int i = 0; i < carpJSON.size(); i++) {
+
+    JSONObject curC = carpJSON.getJSONObject(i);
+    
+   /* for(int j = 0; j< ; j++){
+      point = new PVector(x, y);
+    
+      vertices[i] = point;
+    }
+    
+    c = new Carpet(vertices, "Room 1");
+    input.add(c);*/
+  }
+  return input;
+}
+//------------------------------------------
 
 JSONArray populateFigsJSON(){
+  figurines.clear();//clear figurines list
   JSONArray output = new JSONArray();
   
   for (int i = 0; i < figurines.size(); i++) {
@@ -225,6 +255,27 @@ JSONArray populateWallsJSON(){
     wall.setFloat("h", w.size.y);
 
     output.setJSONObject(i, wall);//add to array
+  }
+  }
+  return output;
+}
+//------------------------------------------
+
+JSONArray populateCarpsJSON(){
+  JSONArray output = new JSONArray();
+  
+  if (carpets.size() == 0){}else{
+  for (int i = 0; i < carpets.size(); i++) {
+    Carpet c = carpets.get(i);
+    
+    JSONObject carpet = new JSONObject();
+
+    /*carpet.setFloat("x", w.pos.x);
+    carpet.setFloat("y", w.pos.y);//NEED A LOOP HERE TO ADD ALL ITEMS FROM VERTICES ARRAY
+    carpet.setFloat("w", w.size.x);
+    carpet.setFloat("h", w.size.y);
+*/
+    output.setJSONObject(i, carpet);//add to array
   }
   }
   return output;
