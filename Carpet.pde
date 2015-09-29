@@ -29,6 +29,7 @@ class Carpet{//store room spaces to display on screen
       }
       endShape(); 
     } 
+    boolean pp=contains(new Point(0,0));
   }
   
   void genShape(){
@@ -41,10 +42,13 @@ class Carpet{//store room spaces to display on screen
   } 
   
   boolean contains(Point point){
-   //if(p.contains(point.x, point.y))return true;
+  /* //if(p.contains(point.x, point.y))return true;
    if(p.contains(point.x, point.y)){println("I DO contain this point!"); return true;}
    //else return false; 
-   else{ println("I do NOT contain this point!"); return false;}
+   else{ println("I do NOT contain this point!"); return false;}*/
+   
+   if(p.contains(mouseX, mouseY)){println("I DO contain this point!"); return true;}
+   else {println("I DON'T contain this point!");return false;}
   }
   
 }//end class Carpet
