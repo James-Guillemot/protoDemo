@@ -1,7 +1,7 @@
 import boofcv.processing.*;
 
 ArrayList<Figurine> figurines;//stores figurines in a list of Figurine type
-ArrayList<Wall> walls;//stores walls in a list of Wall type
+//ArrayList<Wall> walls;//stores walls in a list of Wall type
 ArrayList<Carpet> carpets;//stores carpets in a list of Carpet type
 ArrayList<Button> buttons;//stores buttons in a list of Button type
 
@@ -23,13 +23,13 @@ String bgFile = "bg.png";//store file name for background image - bg.png
 //==========================================
 void setup() {//set up the application
   figurines = new ArrayList<Figurine>();//initialize figurines list
-  walls = new ArrayList<Wall>();//initialize walls list
+  //walls = new ArrayList<Wall>();//initialize walls list
   carpets = new ArrayList<Carpet>();//initialize walls list
   buttons = new ArrayList<Button>();//initialize walls list
 
   setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
-  //setupWalls();//******
- // setupCarpets();
+  //setupWalls();//initial wall area
+  //setupCarpets();//initial carpet areas
   setupGUI();//******
 
   size(1400, 900);//set window size
@@ -52,9 +52,9 @@ void draw() {
 
     //image(bgImg, 0, 0);//used for background image
 
-  for (Wall curWall : walls) {//for each figurine in the list
+  /*for (Wall curWall : walls) {//for each figurine in the list
     curWall.display();//draw the current figurine (one by one)
-  }
+  }*/
   for (Carpet curCarp : carpets) {//for each figurine in the list
     curCarp.display();//draw the current figurine (one by one)
   }
@@ -186,12 +186,12 @@ void keyPressed() {
     break;
   case 'r': 
     println("LOADING ROOMS!"); 
-    walls = readWallsJSON(); 
+    //walls = readWallsJSON(); 
     carpets = readCarpsJSON(); 
     break;
   case 'R': 
     println("LOADING ROOMS!"); 
-    walls = readWallsJSON(); 
+    //walls = readWallsJSON(); 
     carpets = readCarpsJSON(); 
     break;
   case 'f': 
@@ -205,12 +205,12 @@ void keyPressed() {
   case 'h': 
     println("Help: press 'R' to load rooms!");
     println("Press 'F' to load figurines!"); 
-    println("Press 'Q' to quit and save figurines & walls!"); 
+    println("Press 'Q' to quit and save figurines & rooms!"); 
     break;
   case 'H': 
     println("Help: press 'R' to load rooms!"); 
     println("Press 'F' to load figurines!"); 
-    println("Press 'Q' to quit and save figurines & walls!"); 
+    println("Press 'Q' to quit and save figurines & rooms!"); 
     break;
   }
 }
@@ -245,26 +245,26 @@ ArrayList<Figurine> readFigsJSON() {
 }
 //------------------------------------------
 
-ArrayList<Wall> readWallsJSON() {
-  walls.clear();//clear walls list
-  ArrayList<Wall> input = new ArrayList<Wall>();
-  JSONArray wallJSON = loadJSONArray("data/walls.JSON");
-  Wall w;
-
-  for (int i = 0; i < wallJSON.size (); i++) {
-
-    JSONObject curW = wallJSON.getJSONObject(i);
-
-    w = new Wall();
-    w.pos.x = curW.getFloat("x");
-    w.pos.y = curW.getFloat("y");
-    w.size.x = curW.getFloat("w");
-    w.size.y = curW.getFloat("h"); 
-
-    input.add(w);
-  }
-  return input;
-}
+//ArrayList<Wall> readWallsJSON() {
+//  walls.clear();//clear walls list
+//  ArrayList<Wall> input = new ArrayList<Wall>();
+//  JSONArray wallJSON = loadJSONArray("data/walls.JSON");
+//  Wall w;
+//
+//  for (int i = 0; i < wallJSON.size (); i++) {
+//
+//    JSONObject curW = wallJSON.getJSONObject(i);
+//
+//    w = new Wall();
+//    w.pos.x = curW.getFloat("x");
+//    w.pos.y = curW.getFloat("y");
+//    w.size.x = curW.getFloat("w");
+//    w.size.y = curW.getFloat("h"); 
+//
+//    input.add(w);
+//  }
+//  return input;
+//}
 //------------------------------------------
 
 ArrayList<Carpet> readCarpsJSON() {
@@ -287,9 +287,8 @@ ArrayList<Carpet> readCarpsJSON() {
       verts.add(v);//add new vertex to arraylist
     }     
     Carpet c = new Carpet(verts, roomName);//create new carpet with loaded vals.    
-    input.add(c);//add new carpet to carpets list.
-    //println(verts);//debugging
-    //verts.clear();//load vertices
+    input.add(c);//add new carpet to input list.
+    verts.clear();//load vertices
   }
   return input;//return new list;
 }
@@ -317,26 +316,26 @@ JSONArray populateFigsJSON() {
 }
 //------------------------------------------
 
-JSONArray populateWallsJSON() {
-  JSONArray output = new JSONArray();
-
-  if (walls.size() == 0) {
-  } else {
-    for (int i = 0; i < walls.size (); i++) {
-      Wall w = walls.get(i);
-
-      JSONObject wall = new JSONObject();
-
-      wall.setFloat("x", w.pos.x);
-      wall.setFloat("y", w.pos.y);
-      wall.setFloat("w", w.size.x);
-      wall.setFloat("h", w.size.y);
-
-      output.setJSONObject(i, wall);//add to array
-    }
-  }
-  return output;
-}
+//JSONArray populateWallsJSON() {
+//  JSONArray output = new JSONArray();
+//
+//  if (walls.size() == 0) {
+//  } else {
+//    for (int i = 0; i < walls.size (); i++) {
+//      Wall w = walls.get(i);
+//
+//      JSONObject wall = new JSONObject();
+//
+//      wall.setFloat("x", w.pos.x);
+//      wall.setFloat("y", w.pos.y);
+//      wall.setFloat("w", w.size.x);
+//      wall.setFloat("h", w.size.y);
+//
+//      output.setJSONObject(i, wall);//add to array
+//    }
+//  }
+//  return output;
+//}
 //------------------------------------------
 
 JSONArray populateCarpsJSON() {
@@ -370,7 +369,7 @@ JSONArray [] genJSONs() {
   JSONArray toSave[] = new JSONArray[4];
 
   toSave[0] = populateFigsJSON();
-  toSave[1] = populateWallsJSON();
+  //toSave[1] = populateWallsJSON();
   toSave[2] = populateCarpsJSON();
 
   return toSave;
@@ -378,7 +377,7 @@ JSONArray [] genJSONs() {
 
 void saveJSONs(JSONArray toSave[]) {
   saveJSONArray(toSave[0], "data/figs.JSON");
-  saveJSONArray(toSave[1], "data/walls.JSON");
+  //saveJSONArray(toSave[1], "data/walls.JSON");
   saveJSONArray(toSave[2], "data/carps.JSON");
 }
 //end of JSON input and output

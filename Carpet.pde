@@ -1,9 +1,15 @@
+import java.awt.*;
+import java.awt.geom.*;
+
 class Carpet{//store room spaces to display on screen
   PVector pos;
   boolean gen = false;
   color col = #FFFFFF, lineCol = #000000, bgCol = color(col, 180), textCol = #FFFFFF;
   String roomName = "Room Name";
-  java.awt.Polygon p;
+  Polygon p;
+  Area a;
+  
+  
   ArrayList<PVector> vertices;
   
   Carpet(ArrayList<PVector> iVert, String iName) {
@@ -39,16 +45,19 @@ class Carpet{//store room spaces to display on screen
   }
   
   void genShape(){
-   p = new java.awt.Polygon();
+   p = new Polygon();
    for(int i=0; i < vertices.size(); i++){
      p.addPoint((int)vertices.get(i).x,(int)vertices.get(i).y);//draw the polygon
      //println("x: " + vertices.get(i).x + ", y: " + vertices.get(i).y); 
    }    
-   gen=true;
+   gen = true;
+   
+   a = new Area(p);
+
   } 
   
   boolean contains(Point point1, Point point2){
-  if(p.contains(point1.x, point1.y) && p.contains(point2.x, point2.y)){return true;}
+  if(p.contains(point1.x, point1.y, point2.x, point2.y)){return true;}
   else return false; 
    
    /*if(p.contains(mouseX, mouseY)){println(roomName + ": DO have point"); return true;}
