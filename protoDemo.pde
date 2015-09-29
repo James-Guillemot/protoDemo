@@ -271,7 +271,7 @@ ArrayList<Carpet> readCarpsJSON() {
 
       //println(vertex);
 
-      c.p.addV(v);
+      c.vertices.add(v);
     }             
     carpets.add(c);
     //println(carpets.get(i).p.ve);
@@ -334,10 +334,10 @@ JSONArray populateCarpsJSON() {
       JSONObject carpet = new JSONObject();//store the carpet
       JSONArray vertices = new JSONArray();//store the vertices of the carpet
 
-      for (int j = 0; j < c.p.vertices.size (); j++) {//for all vertices in the current carpet
+      for (int j = 0; j < c.vertices.size (); j++) {//for all vertices in the current carpet
         JSONObject v = new JSONObject();
-        v.setFloat("x", c.p.vertices.get(j).x);
-        v.setFloat("y", c.p.vertices.get(j).y);
+        v.setFloat("x", c.vertices.get(j).x);
+        v.setFloat("y", c.vertices.get(j).y);
         vertices.setJSONObject(j, v);
       }  
 
