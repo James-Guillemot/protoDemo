@@ -5,6 +5,7 @@ ArrayList<Wall> walls;//stores walls in a list of Wall type
 ArrayList<Carpet> carpets;//stores carpets in a list of Carpet type
 ArrayList<Button> buttons;//stores buttons in a list of Button type
 
+
 Figurine currentFigurine;//stores an address to the figurine currently in use
 Button currentButton;//stores an address to the figurine currently in use
 
@@ -28,7 +29,7 @@ void setup() {//set up the application
 
   setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
   //setupWalls();//******
-  setupCarpets();
+ // setupCarpets();
   setupGUI();//******
 
   size(1400, 900);//set window size
@@ -202,7 +203,7 @@ void keyPressed() {
     figurines = readFigsJSON(); 
     break;
   case 'h': 
-    println("Help: press 'R' to load rooms!"); 
+    println("Help: press 'R' to load rooms!");
     println("Press 'F' to load figurines!"); 
     println("Press 'Q' to quit and save figurines & walls!"); 
     break;
@@ -286,9 +287,9 @@ ArrayList<Carpet> readCarpsJSON() {
       verts.add(v);//add new vertex to arraylist
     }     
     Carpet c = new Carpet(verts, roomName);//create new carpet with loaded vals.    
-    carpets.add(c);//add new carpet to carpets list.
-    println(verts);//debugging
-    verts.clear();//load vertices
+    input.add(c);//add new carpet to carpets list.
+    //println(verts);//debugging
+    //verts.clear();//load vertices
   }
   return input;//return new list;
 }
