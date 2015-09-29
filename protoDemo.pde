@@ -1,4 +1,9 @@
+import geomerative.*;
 import boofcv.processing.*;
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.geom.Rectangle2D;
+
 
 ArrayList<Figurine> figurines;//stores figurines in a list of Figurine type
 //ArrayList<Wall> walls;//stores walls in a list of Wall type
@@ -22,6 +27,9 @@ String bgFile = "bg.png";//store file name for background image - bg.png
 //default setup and draw methods
 //==========================================
 void setup() {//set up the application
+  RG.init(this);
+  size(1400, 900);//set window size
+  
   figurines = new ArrayList<Figurine>();//initialize figurines list
   //walls = new ArrayList<Wall>();//initialize walls list
   carpets = new ArrayList<Carpet>();//initialize walls list
@@ -29,11 +37,11 @@ void setup() {//set up the application
 
   setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
   //setupWalls();//initial wall area
-  //setupCarpets();//initial carpet areas
+  setupCarpets();//initial carpet areas
   setupGUI();//******
-
-  size(1400, 900);//set window size
+  
   currentFigurine = new Figurine();
+  
   bgColour = color(random(255), random(255), random(255));//set a random colour to be the background
   areaCol = #FFFFFF;
   lineCol = #000000;

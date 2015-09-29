@@ -1,11 +1,9 @@
-import java.awt.geom.Rectangle2D;
-
 class Figurine {//store characters to display on screen
   PVector pos;//my position
   PVector size;//my size
   boolean locked = false;//am I locked to the mouse position?
   //Area a = new Area(new Rectangle(pos.x-size.x/2, pos.y-size.y/2, size.x, size.y));
-  Rectangle2D r;
+  RPolygon r;
   Area z;
 
   int roomNo;//index of room currently occupied
@@ -32,8 +30,7 @@ class Figurine {//store characters to display on screen
   }
 
   void display() {
-    r = new Rectangle((int)(pos.x-size.x/2), (int)(pos.y-size.y/2), (int)size.x, (int)size.y);
-    z = new Area(r);
+    r = RPolygon.createRectangle(pos.x-size.x/2, pos.y-size.y/2, size.x, size.y);
     rectMode(RADIUS);//position of a rectangle is measured from center rather than 0,0 of the rectangle
     imageMode(CENTER);//mirror this with the image mode
     image(img, pos.x, pos.y, size.x, size.y);
@@ -63,10 +60,12 @@ class Figurine {//store characters to display on screen
         String roomName = c.roomName; 
         println(name + ": I am in: " + roomName + " at index " + roomNo);
       }
-
-      z.intersect(c.a);
-      println("area: " + z.());
-
+//ADD HERE AN IDENTIFIER FOR ROOOOOMMSSSSSS***
+      try{
+      float x=r.intersection(c.p).getArea();
+      println("area intersecting: " + x);
+      }
+      catch(Exception e){}
     } 
     if (!room) {
       roomNo = -1;
