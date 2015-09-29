@@ -84,26 +84,36 @@ void setupFigurines() {//creates figurines for initialisation too
 //------------------------------------------
 
 void setupCarpets() {//creates initial carpets
-  Carpet c1;//,c2,c3;//stores figurines as objects
+  Carpet c1,c2,c3;//stores figurines as objects
   ArrayList<PVector> a1 = new ArrayList<PVector>();
-  //ArrayList<PVector> a2 = new ArrayList<PVector>();
+  ArrayList<PVector> a2 = new ArrayList<PVector>();
   //ArrayList<PVector> a3 = new ArrayList<PVector>();
 
-  a1.add(new PVector(280, 50));
-  a1.add(new PVector(805, 50));
-  a1.add(new PVector(805, 285));
-  a1.add(new PVector(500, 285));
-  a1.add(new PVector(500, 485));
-  a1.add(new PVector(280, 485));
-  //a1.add(new PVector(805, 100));
-
-
+  a1.add(new PVector(260, 50));
+  a1.add(new PVector(80, 50));
+  a1.add(new PVector(80, 285));
+  a1.add(new PVector(480, 285));
+  a1.add(new PVector(480, 485));
+  a1.add(new PVector(260, 485));
+  a1.add(new PVector(260, 50));
+  
+  //*********************************
+  a2.add(new PVector(880, 50));
+  a2.add(new PVector(1405, 50));
+  a2.add(new PVector(1405, 285));
+  a2.add(new PVector(1200, 285));
+  a2.add(new PVector(1100, 400));
+  a2.add(new PVector(1100, 485));
+  a2.add(new PVector(880, 485));
+  a2.add(new PVector(880, 50));
+  //*********************************
+  
   c1 = new Carpet(a1, "room 1");
-  //c2 = new Carpet(a2, "room 2");
+  c2 = new Carpet(a2, "room 2");
   //c3 = new Carpet(a3, "room 3");
 
   carpets.add(c1);
-  //carpets.add(c2);
+  carpets.add(c2);
   //carpets.add(c3);
 }
 //------------------------------------------
@@ -254,8 +264,8 @@ ArrayList<Carpet> readCarpsJSON() {
   carpets.clear();//clear all existing carpets from screen
   ArrayList<Carpet> input = new ArrayList<Carpet>();//store all carpets
   ArrayList<PVector> verts;//store all vertices
-  
-  JSONArray carpsJSON = loadJSONArray("data/carps.JSON");
+
+    JSONArray carpsJSON = loadJSONArray("data/carps.JSON");
 
   for (int i = 0; i < carpsJSON.size (); i++) {//iterate through carpets list
     verts = new ArrayList<PVector>();//init. the vertices arraylist
@@ -366,5 +376,4 @@ void saveJSONs(JSONArray toSave[]) {
 }
 //end of JSON input and output
 //==========================================
-
 
