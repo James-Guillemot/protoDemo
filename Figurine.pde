@@ -53,23 +53,25 @@ class Figurine {//store characters to display on screen
   void checkRoom() {
     room = false;
     for (Carpet c : carpets) {
-      boolean in = c.contains(new Point(pos.x - size.x/2, pos.y - size.y/2), new Point(size.x, size.y));
+     /* boolean in = c.contains(new Point(pos.x - size.x/2, pos.y - size.y/2), new Point(size.x, size.y));
       if (in == true) {
         room = true; 
         roomNo = carpets.indexOf(c); 
         String roomName = c.roomName; 
         println(name + ": I am in: " + roomName + " at index " + roomNo);
-      }
+      }*/
+      
 //ADD HERE AN IDENTIFIER FOR ROOOOOMMSSSSSS***
       try{
       float x=r.intersection(c.p).getArea();
       println("area intersecting: " + x);
       }
       catch(Exception e){}
-    } 
+      
     if (!room) {
       roomNo = -1;
     }
   }
+    }
 }//end class figurine
 
