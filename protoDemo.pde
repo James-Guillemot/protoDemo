@@ -251,32 +251,30 @@ ArrayList<Wall> readWallsJSON() {
 //------------------------------------------
 
 ArrayList<Carpet> readCarpsJSON() {
-  carpets.clear();
+  carpets.clear();//clear all existing carpets from screen
   ArrayList<Carpet> input = new ArrayList<Carpet>();//store all carpets
+  ArrayList<PVector> verts;//store all vertices
+  
   JSONArray carpsJSON = loadJSONArray("data/carps.JSON");
-  Carpet c;
 
   for (int i = 0; i < carpsJSON.size (); i++) {//iterate through carpets list
+    verts = new ArrayList<PVector>();//init. the vertices arraylist
+    JSONObject carpet = carpsJSON.getJSONObject(i);//store the carpet JSON input
+    String roomName = carpet.getString("name");//store name of room
 
-    JSONObject carpet = carpsJSON.getJSONObject(i);//store the carpet
-    c = new Carpet();
-
-    c.roomName = carpet.getString("name");//add name of room to carpet JSON object
-
-    JSONArray iVert = carpet.getJSONArray("vertices");//store the vertices of the carpet
+    JSONArray iVert = carpet.getJSONArray("vertices");//store the JSON vertices of the carpet
 
     for (int j = 0; j < iVert.size (); j++) {//for all vertices in the current carpet
-      JSONObject vertex = iVert.getJSONObject(j);
-      PVector v = new PVector(vertex.getFloat("x"), vertex.getFloat("y"));
-
-      //println(vertex);
-
-      c.vertices.add(v);
-    }             
-    carpets.add(c);
-    //println(carpets.get(i).p.ve);
+      JSONObject vertex = iVert.getJSONObject(j);//get the vertex JSONObject from the JSONArray item
+      PVector v = new PVector(vertex.getFloat("x"), vertex.getFloat("y"));//create new PVector to store values
+      verts.add(v);//add new vertex to arraylist
+    }     
+    Carpet c = new Carpet(verts, roomName);//create new carpet with loaded vals.    
+    carpets.add(c);//add new carpet to carpets list.
+    println(verts);
+    verts.clear();//load vertices
   }
-  return input;
+  return input;//return new list;
 }
 //------------------------------------------
 

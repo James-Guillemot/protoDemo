@@ -5,20 +5,16 @@ class Carpet{//store room spaces to display on screen
   String roomName = "Room Name";
   java.awt.Polygon p;
   ArrayList<PVector> vertices;
- 
-  Carpet() {
-    vertices = new ArrayList<PVector>();
-  }
   
   Carpet(ArrayList<PVector> iVert, String iName) {
-    vertices = new ArrayList<PVector>();
+    //vertices = new ArrayList<PVector>();
   
+    vertices = iVert;
+    
     if(iName != "" && iName != null){roomName = iName;} 
       
-    for(PVector vertex : iVert){
-    vertices.add(vertex);}
-    
-    genShape();
+    /*for(PVector vertex : iVert){
+    vertices.add(vertex);}*/
   }
 
   void display(){
