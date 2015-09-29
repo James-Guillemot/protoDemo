@@ -271,7 +271,7 @@ ArrayList<Carpet> readCarpsJSON() {
     }     
     Carpet c = new Carpet(verts, roomName);//create new carpet with loaded vals.    
     carpets.add(c);//add new carpet to carpets list.
-    println(verts);
+    //println(verts);//debugging
     verts.clear();//load vertices
   }
   return input;//return new list;

@@ -7,14 +7,17 @@ class Carpet{//store room spaces to display on screen
   ArrayList<PVector> vertices;
   
   Carpet(ArrayList<PVector> iVert, String iName) {
-    //vertices = new ArrayList<PVector>();
-  
-    vertices = iVert;
+    vertices = new ArrayList<PVector>();
     
+    gen = false;
+    //vertices = iVert;
+      
     if(iName != "" && iName != null){roomName = iName;} 
       
-    /*for(PVector vertex : iVert){
-    vertices.add(vertex);}*/
+    for(PVector vertex : iVert){
+    vertices.add(vertex);}
+    
+    genShape();  
   }
 
   void display(){
@@ -36,6 +39,14 @@ class Carpet{//store room spaces to display on screen
    }    
    gen=true;
   } 
+  
+  boolean contains(Point point){
+   //if(p.contains(point.x, point.y))return true;
+   if(p.contains(point.x, point.y)){println("I DO contain this point!"); return true;}
+   //else return false; 
+   else{ println("I do NOT contain this point!"); return false;}
+  }
+  
 }//end class Carpet
 
 
