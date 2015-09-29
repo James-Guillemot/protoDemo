@@ -1,11 +1,14 @@
 class Figurine{//store characters to display on screen
-  PVector pos;
-  PVector size;
-  boolean locked = false;
+  PVector pos;//my position
+  PVector size;//my size
+  boolean locked = false;//am I locked to the mouse position?
   
-  String name;
-  String imageName;
-  PImage img;
+  int roomNo;//index of room currently occupied
+  boolean room;//am I in a room?
+  
+  String name;//my name
+  String imageName;//path of my image
+  PImage img;//memory store of loaded image
   
   Figurine() {
     pos = new PVector();
@@ -17,6 +20,7 @@ class Figurine{//store characters to display on screen
   Figurine(String iName, float ix, float iy, float iw, float ih, String iFile) {
     pos = new PVector(ix, iy);
     size = new PVector(iw, ih);
+    
     name = iName;
     imageName = iFile;
     img = loadImage(imageName);
@@ -42,15 +46,14 @@ class Figurine{//store characters to display on screen
     else {return false;}//mouse not in me
   } 
 
-  /*void update() {
-    
-  //  println("x: " + diff.x + ", y: " + diff.y);
-    if (mouseIn() && mousePressed) {
-      
-      pos.x = mouseX;
-      pos.y = mouseY;
-      //xpos=(mouseX/8)*8;
-      //ypos=(mouseY/8)*8; 
-     }
-  }*/
+  void checkRoom() {
+    room = false;
+    for(Carpet c : carpets){
+      boolean in = c.contains(new Point(pos.x - size.x/2, pos.y - size.y/2), new Point(pos.x+size.x/2, pos.y+size.y/2));
+      if(in == true){room = true; roomNo = carpets.indexOf(c); String roomName = c.roomName; println(name + ": I am in: " + roomName + " at index " + roomNo);}
+    } 
+    if(!room){
+      roomNo = -1;
+    }    
+  }
 }//end class figurine

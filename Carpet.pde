@@ -1,7 +1,7 @@
 class Carpet{//store room spaces to display on screen
   PVector pos;
   boolean gen = false;
-  color lineCol = #000000, bgCol = color(0,0,0,0.7), textCol = #FFFFFF;
+  color col = #FFFFFF, lineCol = #000000, bgCol = color(col, 180), textCol = #FFFFFF;
   String roomName = "Room Name";
   java.awt.Polygon p;
   ArrayList<PVector> vertices;
@@ -23,13 +23,19 @@ class Carpet{//store room spaces to display on screen
   void display(){
     if(!gen){genShape();}
     else{ 
+      fill(bgCol);
+      stroke(lineCol);
+      strokeWeight(2);
       beginShape();
       for (int i = 0; i < p.npoints; i++) {
         vertex(p.xpoints[i], p.ypoints[i]);//draw the polygon
       }
       endShape(); 
     } 
-    boolean pp=contains(new Point(0,0));
+       
+    stroke(255,0,0);
+    strokeWeight(10);
+    //point(290,65); point(420,450);
   }
   
   void genShape(){
@@ -41,14 +47,12 @@ class Carpet{//store room spaces to display on screen
    gen=true;
   } 
   
-  boolean contains(Point point){
-  /* //if(p.contains(point.x, point.y))return true;
-   if(p.contains(point.x, point.y)){println("I DO contain this point!"); return true;}
-   //else return false; 
-   else{ println("I do NOT contain this point!"); return false;}*/
+  boolean contains(Point point1, Point point2){
+  if(p.contains(point1.x, point1.y) && p.contains(point2.x, point2.y)){return true;}
+  else return false; 
    
-   if(p.contains(mouseX, mouseY)){println("I DO contain this point!"); return true;}
-   else {println("I DON'T contain this point!");return false;}
+   /*if(p.contains(mouseX, mouseY)){println(roomName + ": DO have point"); return true;}
+   else {println(roomName + ": DON'T have point");return false;}*/
   }
   
 }//end class Carpet

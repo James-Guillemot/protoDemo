@@ -12,7 +12,7 @@ PVector diff = new PVector(), figSize = new PVector(60, 110);//set global figuri
 
 boolean figMoving = false;//is a figurine moving?
 
-color bgColour;//colour of background for window
+color bgColour, areaCol, lineCol;//colour of background for window
 PImage bgImg;//background image
 String bgFile = "bg.png";//store file name for background image - bg.png
 //end of global variables and imports
@@ -31,9 +31,11 @@ void setup() {//set up the application
   setupCarpets();
   setupGUI();//******
 
-  size(1400, 900, P2D);//set window size
+  size(1400, 900);//set window size
   currentFigurine = new Figurine();
   bgColour = color(random(255), random(255), random(255));//set a random colour to be the background
+  areaCol = #FFFFFF;
+  lineCol = #000000;
   //bgImg = loadImage(bgFile);//use this to set a background image
 
   rectMode(RADIUS);//position of a rectangle is measured from center rather than 0,0 of the rectangle
@@ -42,6 +44,9 @@ void setup() {//set up the application
 //------------------------------------------
 void draw() {
   background(bgColour);
+  fill (areaCol);
+  stroke(lineCol);
+  strokeWeight(2);
   rect(0, 0, 200, height);//draw area on left
 
     //image(bgImg, 0, 0);//used for background image
@@ -56,6 +61,7 @@ void draw() {
     curBut.display();//draw the current figurine (one by one)
   }
   for (Figurine curFig : figurines) {//for each figurine in the list
+    curFig.checkRoom();  
     curFig.display();//draw the current figurine (one by one)
   }
 }
@@ -84,30 +90,30 @@ void setupFigurines() {//creates figurines for initialisation too
 //------------------------------------------
 
 void setupCarpets() {//creates initial carpets
-  Carpet c1,c2,c3;//stores figurines as objects
+  Carpet c1, c2, c3;//stores figurines as objects
   ArrayList<PVector> a1 = new ArrayList<PVector>();
   ArrayList<PVector> a2 = new ArrayList<PVector>();
   //ArrayList<PVector> a3 = new ArrayList<PVector>();
 
   a1.add(new PVector(260, 50));
-  a1.add(new PVector(80, 50));
-  a1.add(new PVector(80, 285));
-  a1.add(new PVector(480, 285));
-  a1.add(new PVector(480, 485));
-  a1.add(new PVector(260, 485));
+  a1.add(new PVector(760, 50));
+  a1.add(new PVector(760, 280));
+  a1.add(new PVector(460, 280));
+  a1.add(new PVector(460, 480));
+  a1.add(new PVector(260, 480));
   a1.add(new PVector(260, 50));
-  
+
   //*********************************
-  a2.add(new PVector(880, 50));
-  a2.add(new PVector(1405, 50));
-  a2.add(new PVector(1405, 285));
-  a2.add(new PVector(1200, 285));
-  a2.add(new PVector(1100, 400));
-  a2.add(new PVector(1100, 485));
-  a2.add(new PVector(880, 485));
-  a2.add(new PVector(880, 50));
+  a2.add(new PVector(820, 50));
+  a2.add(new PVector(1360, 50));
+  a2.add(new PVector(1360, 285));
+  a2.add(new PVector(1160, 285));
+  a2.add(new PVector(1060, 400));
+  a2.add(new PVector(1060, 485));
+  a2.add(new PVector(820, 485));
+  a2.add(new PVector(820, 50));
   //*********************************
-  
+
   c1 = new Carpet(a1, "room 1");
   c2 = new Carpet(a2, "room 2");
   //c3 = new Carpet(a3, "room 3");
@@ -281,7 +287,7 @@ ArrayList<Carpet> readCarpsJSON() {
     }     
     Carpet c = new Carpet(verts, roomName);//create new carpet with loaded vals.    
     carpets.add(c);//add new carpet to carpets list.
-    //println(verts);//debugging
+    println(verts);//debugging
     verts.clear();//load vertices
   }
   return input;//return new list;

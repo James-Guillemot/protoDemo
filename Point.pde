@@ -1,9 +1,9 @@
 class Point{//store points to check
   int x, y;
   
-  Point(int ix, int iy) {
-    x = ix;
-    y = iy;
+  Point(float ix, float iy) {
+    x = (int)ix;
+    y = (int)iy;
   }
 
   void display(){
