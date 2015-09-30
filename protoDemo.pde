@@ -37,7 +37,7 @@ void setup() {//set up the application
 
   setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
   //setupWalls();//initial wall area
-  setupCarpets();//initial carpet areas
+  //setupCarpets();//initial carpet areas
   setupGUI();//******
   
   currentFigurine = new Figurine();
