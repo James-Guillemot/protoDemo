@@ -37,7 +37,7 @@ void setup() {//set up the application
 
   setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
   //setupWalls();//initial wall area
-  //setupCarpets();//initial carpet areas
+  setupCarpets();//initial carpet areas
   setupGUI();//******
   
   currentFigurine = new Figurine();
@@ -102,34 +102,46 @@ void setupCarpets() {//creates initial carpets
   Carpet c1, c2, c3;//stores figurines as objects
   ArrayList<PVector> a1 = new ArrayList<PVector>();
   ArrayList<PVector> a2 = new ArrayList<PVector>();
-  //ArrayList<PVector> a3 = new ArrayList<PVector>();
+  ArrayList<PVector> a3 = new ArrayList<PVector>();
 
   a1.add(new PVector(260, 50));
-  a1.add(new PVector(760, 50));
-  a1.add(new PVector(760, 280));
-  a1.add(new PVector(460, 280));
-  a1.add(new PVector(460, 480));
-  a1.add(new PVector(260, 480));
+  a1.add(new PVector(740, 50));
+  a1.add(new PVector(740, 280));
+  a1.add(new PVector(780, 480));
+  a1.add(new PVector(360, 480));
+  a1.add(new PVector(360, 280));
+  a1.add(new PVector(260, 280));
   a1.add(new PVector(260, 50));
 
   //*********************************
-  a2.add(new PVector(820, 50));
+  a2.add(new PVector(780, 50));
+  a2.add(new PVector(780, 50));
   a2.add(new PVector(1360, 50));
   a2.add(new PVector(1360, 285));
-  a2.add(new PVector(1160, 285));
-  a2.add(new PVector(1060, 400));
-  a2.add(new PVector(1060, 485));
+  a2.add(new PVector(1260, 400));
+  a2.add(new PVector(1260, 485));
   a2.add(new PVector(820, 485));
-  a2.add(new PVector(820, 50));
+  a2.add(new PVector(780, 280));
+  a2.add(new PVector(780, 50));
+  a2.add(new PVector(780, 50));
+  //*********************************
+  
+  a3.add(new PVector(720, 520));
+  a3.add(new PVector(1360, 520));
+  a3.add(new PVector(1360, 850));
+  a3.add(new PVector(1160, 850));
+  a3.add(new PVector(900, 780));
+  a3.add(new PVector(720, 780));
+  a3.add(new PVector(720, 520));
   //*********************************
 
   c1 = new Carpet(a1, "room 1");
   c2 = new Carpet(a2, "room 2");
-  //c3 = new Carpet(a3, "room 3");
+  c3 = new Carpet(a3, "room 3");
 
   carpets.add(c1);
   carpets.add(c2);
-  //carpets.add(c3);
+  carpets.add(c3);
 }
 //------------------------------------------
 
@@ -185,36 +197,22 @@ void keyPressed() {
     println("INVALID OPTION SELECTED! Press 'H' for key bindings"); 
     break;
   case 'q': 
-    println("SAVED AND EXITED!"); 
-    saveExit(); 
-    break;
   case 'Q': 
     println("SAVED AND EXITED!"); 
     saveExit(); 
     break;
   case 'r': 
-    println("LOADING ROOMS!"); 
-    //walls = readWallsJSON(); 
-    carpets = readCarpsJSON(); 
-    break;
   case 'R': 
     println("LOADING ROOMS!"); 
     //walls = readWallsJSON(); 
     carpets = readCarpsJSON(); 
     break;
   case 'f': 
-    println("LOADING FIGURINES!"); 
-    figurines = readFigsJSON(); 
-    break;
   case 'F': 
     println("LOADING FIGURINES!"); 
     figurines = readFigsJSON(); 
     break;
   case 'h': 
-    println("Help: press 'R' to load rooms!");
-    println("Press 'F' to load figurines!"); 
-    println("Press 'Q' to quit and save figurines & rooms!"); 
-    break;
   case 'H': 
     println("Help: press 'R' to load rooms!"); 
     println("Press 'F' to load figurines!"); 
