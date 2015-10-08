@@ -2,9 +2,9 @@ class Figurine {//store characters to display on screen
   PVector pos;//my position
   PVector size;//my size
   boolean locked = false;//am I locked to the mouse position?
-  //Area a = new Area(new Rectangle(pos.x-size.x/2, pos.y-size.y/2, size.x, size.y));
-  RPolygon r;
-  Area z;
+  
+  RPolygon r;//bounding rectangle
+  Area z;//area of 
 
   int roomNo;//index of room currently occupied
   boolean room;//am I in a room?
@@ -76,9 +76,6 @@ class Figurine {//store characters to display on screen
       }
     }
   }
-  
-  void update(){
-    
-  }
+
 }//end class figurine
 

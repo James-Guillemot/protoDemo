@@ -1,5 +1,4 @@
 class Area {//store room spaces to display on screen
-  PVector pos;
   boolean gen = false;
   color col = #FFFFFF, lineCol = #000000, bgCol = color(col, 245), textCol = #FFFFFF;
   String areaName = "Area Name";
@@ -23,15 +22,32 @@ class Area {//store room spaces to display on screen
    /* for (PVector vertex : iVert) {
       vertices.add(vertex);
     }*/
-
+   
     genShape();
   }
 
+  Area() {
+    vertices = new ArrayList<PVector>();
+
+    gen = false;
+   // draw = false;
+   
+    
+    col = #CC8888; lineCol = #000000; bgCol = color(col, 245);
+
+   /* for (PVector vertex : iVert) {
+      vertices.add(vertex);
+    }*/
+  
+    genShape();
+  }
+  
   void display() {
     fill(bgCol);
     stroke(lineCol);
     strokeWeight(2);
     p.draw();
+  
     /* if(!gen){genShape();}
      else{ 
      

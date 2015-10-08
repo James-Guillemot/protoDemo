@@ -1,8 +1,12 @@
 import geomerative.*;
+
 import boofcv.processing.*;
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.geom.Rectangle2D;
+import boofcv.struct.image.*;
+import georegression.struct.point.*;
+import java.util.*;
+
+List<List<Point2D_I32>> polygons;
+
 
 ArrayList<Figurine> figurines;//stores figurines in a list of Figurine type
 ArrayList<Area> areas;//stores carpets in a list of Carpet type
@@ -36,7 +40,7 @@ void setup() {//set up the application
 
   setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
   //setupWalls();//initial wall area
-  setupCarpets();//initial carpet areas
+ // setupCarpets();//initial carpet areas
   setupGUI();//******
 
   currentFigurine = new Figurine();
@@ -70,7 +74,6 @@ void draw() {
     curBut.display();//draw the current figurine (one by one)
   }
   for (Figurine curFig : figurines) {//for each figurine in the list
-    curFig.checkRoom();  
     curFig.display();//draw the current figurine (one by one)
   }
 }
@@ -221,8 +224,8 @@ void mouseDragged() {
 void mouseReleased() {
   figMoving=false;
   theFig = -1;
-
-  currentFigurine.update();
+println();
+  currentFigurine.checkRoom();  
   //println(figMoving);
 }
 //------------------------------------------
@@ -358,7 +361,7 @@ JSONArray populateFigsJSON() {
 //}
 //------------------------------------------
 
-JSONArray populateCarpsJSON() {
+JSONArray populateAreasJSON() {
   JSONArray output = new JSONArray();//store all carpets
 
   if (areas.size() != 0) {//if there are carpets
@@ -390,7 +393,7 @@ JSONArray [] genJSONs() {
 
   toSave[0] = populateFigsJSON();
   //toSave[1] = populateWallsJSON();
-  toSave[2] = populateCarpsJSON();
+  toSave[2] = populateAreasJSON();
 
   return toSave;
 }
@@ -398,7 +401,7 @@ JSONArray [] genJSONs() {
 void saveJSONs(JSONArray toSave[]) {
   saveJSONArray(toSave[0], "data/figs.JSON");
   //saveJSONArray(toSave[1], "data/walls.JSON");
-  saveJSONArray(toSave[2], "data/carps.JSON");
+  saveJSONArray(toSave[2], "data/areas.JSON");
 }
 //end of JSON input and output
 //==========================================
