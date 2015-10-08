@@ -1,25 +1,28 @@
-class Carpet {//store room spaces to display on screen
+class Area {//store room spaces to display on screen
   PVector pos;
   boolean gen = false;
-  color col = #FFFFFF, lineCol = #000000, bgCol = color(col, 180), textCol = #FFFFFF;
-  String roomName = "Room Name";
+  color col = #FFFFFF, lineCol = #000000, bgCol = color(col, 245), textCol = #FFFFFF;
+  String areaName = "Area Name";
   RPolygon p;
 
   ArrayList<PVector> vertices;
+  ArrayList<Figurine> figurines;
 
-  Carpet(ArrayList<PVector> iVert, String iName) {
+  Area(ArrayList<PVector> iVert, String iName) {
     vertices = new ArrayList<PVector>();
 
     gen = false;
-    //vertices = iVert;
+    vertices = iVert;
 
     if (iName != "" && iName != null) {
-      roomName = iName;
+      areaName = iName;
     } 
+    
+    col = #CC8888; lineCol = #000000; bgCol = color(col, 245);
 
-    for (PVector vertex : iVert) {
+   /* for (PVector vertex : iVert) {
       vertices.add(vertex);
-    }
+    }*/
 
     genShape();
   }
@@ -61,5 +64,10 @@ class Carpet {//store room spaces to display on screen
     else {println(roomName + ": DON'T have point");return false;}
     return false;
   }*/
+  
+  int contains(Figurine F){
+    return -1;    
+  }
+  
 }//end class Carpet
 

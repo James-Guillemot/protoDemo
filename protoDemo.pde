@@ -4,23 +4,22 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.geom.Rectangle2D;
 
-
 ArrayList<Figurine> figurines;//stores figurines in a list of Figurine type
-//ArrayList<Wall> walls;//stores walls in a list of Wall type
-ArrayList<Carpet> carpets;//stores carpets in a list of Carpet type
+ArrayList<Area> areas;//stores carpets in a list of Carpet type
 ArrayList<Button> buttons;//stores buttons in a list of Button type
-
 
 Figurine currentFigurine;//stores an address to the figurine currently in use
 Button currentButton;//stores an address to the figurine currently in use
 
-PVector diff = new PVector(), figSize = new PVector(60, 110);//set global figurine size - remove or comment if individually sizing//store the size of all figurines - remove for individually sized figs
+PVector diff = new PVector(), figSize = new PVector(90, 65);//set global figurine size - remove or comment if individually sizing//store the size of all figurines - remove for individually sized figs
 
 boolean figMoving = false;//is a figurine moving?
+int theFig = -1;//is a figurine moving?
 
 color bgColour, areaCol, lineCol;//colour of background for window
 PImage bgImg;//background image
-String bgFile = "bg.png";//store file name for background image - bg.png
+//String bgFile = "bg.jpg";//store file name for background image - bg.png
+String bgFile = "bg3.jpg";//store file name for background image - bg.png
 //end of global variables and imports
 //==========================================
 
@@ -28,24 +27,24 @@ String bgFile = "bg.png";//store file name for background image - bg.png
 //==========================================
 void setup() {//set up the application
   RG.init(this);
-  size(1400, 900);//set window size
-  
+  size(1440, 900);//set window size
+
   figurines = new ArrayList<Figurine>();//initialize figurines list
   //walls = new ArrayList<Wall>();//initialize walls list
-  carpets = new ArrayList<Carpet>();//initialize walls list
+  areas = new ArrayList<Area>();//initialize walls list
   buttons = new ArrayList<Button>();//initialize walls list
 
   setupFigurines();//to reset the default figurines - currently not used as figs can be loaded!
   //setupWalls();//initial wall area
   setupCarpets();//initial carpet areas
   setupGUI();//******
-  
+
   currentFigurine = new Figurine();
-  
+
   bgColour = color(random(255), random(255), random(255));//set a random colour to be the background
   areaCol = #FFFFFF;
   lineCol = #000000;
-  //bgImg = loadImage(bgFile);//use this to set a background image
+  bgImg = loadImage(bgFile);//use this to set a background image
 
   rectMode(RADIUS);//position of a rectangle is measured from center rather than 0,0 of the rectangle
   imageMode(CENTER);//mirror this with the image mode
@@ -53,6 +52,7 @@ void setup() {//set up the application
 //------------------------------------------
 void draw() {
   background(bgColour);
+  //background(bgImg);
   fill (areaCol);
   stroke(lineCol);
   strokeWeight(2);
@@ -61,10 +61,10 @@ void draw() {
     //image(bgImg, 0, 0);//used for background image
 
   /*for (Wall curWall : walls) {//for each figurine in the list
-    curWall.display();//draw the current figurine (one by one)
-  }*/
-  for (Carpet curCarp : carpets) {//for each figurine in the list
-    curCarp.display();//draw the current figurine (one by one)
+   curWall.display();//draw the current figurine (one by one)
+   }*/
+  for (Area curArea : areas) {//for each figurine in the list
+    curArea.display();//draw the current figurine (one by one)
   }
   for (Button curBut : buttons) {//for each figurine in the list
     curBut.display();//draw the current figurine (one by one)
@@ -84,13 +84,13 @@ void setupFigurines() {//creates figurines for initialisation too
   tom = new Figurine("Tom", 50, 60, figSize.x, figSize.y, "tom.png");
   figurines.add(tom);
 
-  fred = new Figurine("Fred", 140, 60, figSize.x, figSize.y, "fred.png");
+  fred = new Figurine("Fred", 150, 60, figSize.x, figSize.y, "fred.png");
   figurines.add(fred);
 
   jassi = new Figurine("Jassi", 50, 180, figSize.x, figSize.y, "jassi.png");
   figurines.add(jassi);
 
-  tilly = new Figurine("Tilly", 140, 180, figSize.x, figSize.y, "tilly.png");
+  tilly = new Figurine("Tilly", 150, 180, figSize.x, figSize.y, "tilly.png");
   figurines.add(tilly);
 
   bill = new Figurine("Bill", 50, 300, figSize.x, figSize.y, "bill.png");
@@ -99,49 +99,81 @@ void setupFigurines() {//creates figurines for initialisation too
 //------------------------------------------
 
 void setupCarpets() {//creates initial carpets
-  Carpet c1, c2, c3;//stores figurines as objects
+  Area c1, c2, c3, c4, c5, c6, c7, c8;//stores figurines as objects
+  
   ArrayList<PVector> a1 = new ArrayList<PVector>();
   ArrayList<PVector> a2 = new ArrayList<PVector>();
   ArrayList<PVector> a3 = new ArrayList<PVector>();
+  ArrayList<PVector> a4 = new ArrayList<PVector>();
+  ArrayList<PVector> b1 = new ArrayList<PVector>();
+  ArrayList<PVector> b2 = new ArrayList<PVector>();
+  ArrayList<PVector> b3 = new ArrayList<PVector>();
+  ArrayList<PVector> b4 = new ArrayList<PVector>();
 
-  a1.add(new PVector(260, 50));
-  a1.add(new PVector(740, 50));
-  a1.add(new PVector(740, 280));
-  a1.add(new PVector(780, 480));
-  a1.add(new PVector(360, 480));
-  a1.add(new PVector(360, 280));
-  a1.add(new PVector(260, 280));
-  a1.add(new PVector(260, 50));
+  a1.add(new PVector(240, 40));
+  a1.add(new PVector(290, 40));
+  a1.add(new PVector(290, 90));
+  a1.add(new PVector(240, 90));
 
   //*********************************
-  a2.add(new PVector(780, 50));
-  a2.add(new PVector(780, 50));
-  a2.add(new PVector(1360, 50));
-  a2.add(new PVector(1360, 285));
-  a2.add(new PVector(1260, 400));
-  a2.add(new PVector(1260, 485));
-  a2.add(new PVector(820, 485));
-  a2.add(new PVector(780, 280));
-  a2.add(new PVector(780, 50));
-  a2.add(new PVector(780, 50));
+  a2.add(new PVector(290, 40));
+  a2.add(new PVector(340, 40));
+  a2.add(new PVector(340, 90));
+  a2.add(new PVector(290, 90));
+  //*********************************
+
+  a3.add(new PVector(340, 40));
+  a3.add(new PVector(390, 40));
+  a3.add(new PVector(390, 90));
+  a3.add(new PVector(340, 90));
+
+  //*********************************
+  a4.add(new PVector(390, 40));
+  a4.add(new PVector(440, 40));
+  a4.add(new PVector(440, 90));
+  a4.add(new PVector(390, 90));
   //*********************************
   
-  a3.add(new PVector(720, 520));
-  a3.add(new PVector(1360, 520));
-  a3.add(new PVector(1360, 850));
-  a3.add(new PVector(1160, 850));
-  a3.add(new PVector(900, 780));
-  a3.add(new PVector(720, 780));
-  a3.add(new PVector(720, 520));
+  b1.add(new PVector(240, 90));
+  b1.add(new PVector(290, 90));
+  b1.add(new PVector(290, 140));
+  b1.add(new PVector(240, 140));
+
+  //*********************************
+  b2.add(new PVector(290, 90));
+  b2.add(new PVector(340, 90));
+  b2.add(new PVector(340, 140));
+  b2.add(new PVector(290, 140));
   //*********************************
 
-  c1 = new Carpet(a1, "room 1");
-  c2 = new Carpet(a2, "room 2");
-  c3 = new Carpet(a3, "room 3");
+  b3.add(new PVector(340, 90));
+  b3.add(new PVector(390, 90));
+  b3.add(new PVector(390, 140));
+  b3.add(new PVector(340, 140));
 
-  carpets.add(c1);
-  carpets.add(c2);
-  carpets.add(c3);
+  //*********************************
+  b4.add(new PVector(390, 90));
+  b4.add(new PVector(440, 90));
+  b4.add(new PVector(440, 140));
+  b4.add(new PVector(390, 140));
+  //*********************************
+  c1 = new Area(a1, "1");
+  c2 = new Area(a2, "2");
+  c3 = new Area(a3, "3");
+  c4 = new Area(a4, "4");
+  c5 = new Area(b1, "5");
+  c6 = new Area(b2, "6");
+  c7 = new Area(b3, "7");
+  c8 = new Area(b4, "8");
+
+  areas.add(c1);
+  areas.add(c2);
+  areas.add(c3);
+  areas.add(c4);
+  areas.add(c5);
+  areas.add(c6);
+  areas.add(c7);
+  areas.add(c8);
 }
 //------------------------------------------
 
@@ -166,6 +198,7 @@ void mousePressed() {
   for (Figurine curFig : figurines) {//for each figurine in the list
     if (curFig.mouseIn()) {
       figMoving=true; 
+      theFig = figurines.indexOf(curFig);
       currentFigurine = curFig;
       diff.x = mouseX - currentFigurine.pos.x;
       diff.y = mouseY - currentFigurine.pos.y;
@@ -187,6 +220,9 @@ void mouseDragged() {
 //------------------------------------------
 void mouseReleased() {
   figMoving=false;
+  theFig = -1;
+
+  currentFigurine.update();
   //println(figMoving);
 }
 //------------------------------------------
@@ -205,7 +241,7 @@ void keyPressed() {
   case 'R': 
     println("LOADING ROOMS!"); 
     //walls = readWallsJSON(); 
-    carpets = readCarpsJSON(); 
+    areas = readAreasJSON(); 
     break;
   case 'f': 
   case 'F': 
@@ -239,8 +275,8 @@ ArrayList<Figurine> readFigsJSON() {
     f.name = curF.getString("name");//populate name
     f.pos.x = curF.getFloat("x");//populate x pos
     f.pos.y = curF.getFloat("y");//populate y pos
-    f.size.x = curF.getFloat("w");//populate width
-    f.size.y = curF.getFloat("h");//populate height
+    f.size.x = figSize.x;//populate width
+    f.size.y = figSize.y;//populate height
     f.imageName = curF.getString("file");//populate file name
     f.img = loadImage(f.imageName);//load image and populate image
     //println(i);//print the array location (debugging)
@@ -251,49 +287,27 @@ ArrayList<Figurine> readFigsJSON() {
 }
 //------------------------------------------
 
-//ArrayList<Wall> readWallsJSON() {
-//  walls.clear();//clear walls list
-//  ArrayList<Wall> input = new ArrayList<Wall>();
-//  JSONArray wallJSON = loadJSONArray("data/walls.JSON");
-//  Wall w;
-//
-//  for (int i = 0; i < wallJSON.size (); i++) {
-//
-//    JSONObject curW = wallJSON.getJSONObject(i);
-//
-//    w = new Wall();
-//    w.pos.x = curW.getFloat("x");
-//    w.pos.y = curW.getFloat("y");
-//    w.size.x = curW.getFloat("w");
-//    w.size.y = curW.getFloat("h"); 
-//
-//    input.add(w);
-//  }
-//  return input;
-//}
-//------------------------------------------
-
-ArrayList<Carpet> readCarpsJSON() {
-  carpets.clear();//clear all existing carpets from screen
-  ArrayList<Carpet> input = new ArrayList<Carpet>();//store all carpets
+ArrayList<Area> readAreasJSON() {
+  areas.clear();//clear all existing carpets from screen
+  ArrayList<Area> input = new ArrayList<Area>();//store all carpets
   ArrayList<PVector> verts;//store all vertices
 
-    JSONArray carpsJSON = loadJSONArray("data/carps.JSON");
+    JSONArray areaJSON = loadJSONArray("data/areas.JSON");
 
-  for (int i = 0; i < carpsJSON.size (); i++) {//iterate through carpets list
+  for (int i = 0; i < areaJSON.size (); i++) {//iterate through carpets list
     verts = new ArrayList<PVector>();//init. the vertices arraylist
-    JSONObject carpet = carpsJSON.getJSONObject(i);//store the carpet JSON input
-    String roomName = carpet.getString("name");//store name of room
+    JSONObject area = areaJSON.getJSONObject(i);//store the carpet JSON input
+    String roomName = area.getString("name");//store name of room
 
-    JSONArray iVert = carpet.getJSONArray("vertices");//store the JSON vertices of the carpet
+    JSONArray iVert = area.getJSONArray("vertices");//store the JSON vertices of the carpet
 
     for (int j = 0; j < iVert.size (); j++) {//for all vertices in the current carpet
       JSONObject vertex = iVert.getJSONObject(j);//get the vertex JSONObject from the JSONArray item
       PVector v = new PVector(vertex.getFloat("x"), vertex.getFloat("y"));//create new PVector to store values
       verts.add(v);//add new vertex to arraylist
     }     
-    Carpet c = new Carpet(verts, roomName);//create new carpet with loaded vals.    
-    input.add(c);//add new carpet to input list.
+    Area a = new Area(verts, roomName);//create new carpet with loaded vals.    
+    input.add(a);//add new carpet to input list.
     verts.clear();//load vertices
   }
   return input;//return new list;
@@ -347,24 +361,24 @@ JSONArray populateFigsJSON() {
 JSONArray populateCarpsJSON() {
   JSONArray output = new JSONArray();//store all carpets
 
-  if (carpets.size() != 0) {//if there are carpets
-    for (int i = 0; i < carpets.size (); i++) {//iterate through carpets list
-      Carpet c = carpets.get(i);//current carpet in use
+  if (areas.size() != 0) {//if there are carpets
+    for (int i = 0; i < areas.size (); i++) {//iterate through carpets list
+      Area a = areas.get(i);//current carpet in use
 
-      JSONObject carpet = new JSONObject();//store the carpet
+      JSONObject area = new JSONObject();//store the carpet
       JSONArray vertices = new JSONArray();//store the vertices of the carpet
 
-      for (int j = 0; j < c.vertices.size (); j++) {//for all vertices in the current carpet
+      for (int j = 0; j < a.vertices.size (); j++) {//for all vertices in the current carpet
         JSONObject v = new JSONObject();
-        v.setFloat("x", c.vertices.get(j).x);
-        v.setFloat("y", c.vertices.get(j).y);
+        v.setFloat("x", a.vertices.get(j).x);
+        v.setFloat("y", a.vertices.get(j).y);
         vertices.setJSONObject(j, v);
       }  
 
-      carpet.setJSONArray("vertices", vertices);//add vertices to carpet JSON object
-      carpet.setString("name", c.roomName);//add name of room to carpet JSON object
+      area.setJSONArray("vertices", vertices);//add vertices to carpet JSON object
+      area.setString("name", a.areaName);//add name of room to carpet JSON object
 
-      output.setJSONObject(i, carpet);//add carpet JSON object to array
+      output.setJSONObject(i, area);//add carpet JSON object to array
     }
   }
   return output;

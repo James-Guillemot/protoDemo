@@ -52,7 +52,7 @@ class Figurine {//store characters to display on screen
 
   void checkRoom() {
     room = false;
-    for (Carpet c : carpets) {
+    for (Area theArea : areas) {
      /* boolean in = c.contains(new Point(pos.x - size.x/2, pos.y - size.y/2), new Point(size.x, size.y));
       if (in == true) {
         room = true; 
@@ -61,17 +61,24 @@ class Figurine {//store characters to display on screen
         println(name + ": I am in: " + roomName + " at index " + roomNo);
       }*/
       
-//ADD HERE AN IDENTIFIER FOR ROOOOOMMSSSSSS***
+      //ADD HERE AN IDENTIFIER FOR ROOOOOMMSSSSSS***
+
       try{
-      float x=r.intersection(c.p).getArea();
-      println("area intersecting: " + x);
+        float x=r.intersection(theArea.p).getArea();
+        println(name + ": Area of me in " + theArea.areaName + ": " + x);
       }
-      catch(Exception e){}
+      catch(Exception e){
+        //println(name + ": I am not in a room");
+      }
       
-    if (!room) {
-      roomNo = -1;
+      if (!room) {
+        roomNo = -1;
+      }
     }
   }
-    }
+  
+  void update(){
+    
+  }
 }//end class figurine
 
