@@ -2,7 +2,7 @@ class Figurine {//store characters to display on screen
   PVector pos;//my position
   PVector size;//my size
   boolean locked = false;//am I locked to the mouse position?
-  
+
   RPolygon r;//bounding rectangle
   Area z;//area of 
 
@@ -52,6 +52,8 @@ class Figurine {//store characters to display on screen
 
   void checkRoom() {
     room = false;
+    float previousArea = 0;
+
     for (Area theArea : areas) {
      /* boolean in = c.contains(new Point(pos.x - size.x/2, pos.y - size.y/2), new Point(size.x, size.y));
       if (in == true) {
@@ -65,7 +67,16 @@ class Figurine {//store characters to display on screen
 
       try{
         float x=r.intersection(theArea.p).getArea();
-        println(name + ": Area of me in " + theArea.areaName + ": " + x);
+
+        if (x > 0){//if the area intersected is greater than 0
+          if (x > previousArea){
+            previousArea = x;
+            roomNo = areas.indexOf(theArea); 
+            //DO SOMETHING ABOUT IT
+            println("\n" + name + ": I am in " + areas.get(roomNo).areaName + "!" + x);
+          }
+        }
+        else {previousArea = 0;}
       }
       catch(Exception e){
         //println(name + ": I am not in a room");

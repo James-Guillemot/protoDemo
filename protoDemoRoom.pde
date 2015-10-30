@@ -1,6 +1,6 @@
 import geomerative.*;
 
-import boofcv.processing.*;
+//import boofcv.processing.*;
 import boofcv.struct.image.*;
 import georegression.struct.point.*;
 import java.util.*;
@@ -22,14 +22,17 @@ int theFig = -1;//is a figurine moving?
 
 color bgColour, areaCol, lineCol;//colour of background for window
 PImage bgImg;//background image
-//String bgFile = "bg.jpg";//store file name for background image - bg.png
 String bgFile = "bg3.jpg";//store file name for background image - bg.png
+
 //end of global variables and imports
 //==========================================
 
 //default setup and draw methods
 //==========================================
 void setup() {//set up the application
+
+  frameRate(20);
+  
   RG.init(this);
   size(1440, 900);//set window size
 
@@ -224,7 +227,7 @@ void mouseDragged() {
 void mouseReleased() {
   figMoving=false;
   theFig = -1;
-println();
+//println();
   currentFigurine.checkRoom();  
   //println(figMoving);
 }
@@ -240,11 +243,17 @@ void keyPressed() {
     println("SAVED AND EXITED!"); 
     saveExit(); 
     break;
-  case 'r': 
+  /*case 'r': 
   case 'R': 
     println("LOADING ROOMS!"); 
     //walls = readWallsJSON(); 
-    areas = readAreasJSON(); 
+    areas = readAreasJSON();  */
+  case 'r': 
+  case 'R': 
+    println("LOADING ROOMS!"); 
+    RoomDetector rd = new RoomDetector(); 
+    areas = rd.getAreas(); 
+    //areas = readAreasJSON(); 
     break;
   case 'f': 
   case 'F': 
@@ -253,7 +262,7 @@ void keyPressed() {
     break;
   case 'h': 
   case 'H': 
-    println("Help: press 'R' to load rooms!"); 
+    println("Help:\npress 'R' to load rooms!"); 
     println("Press 'F' to load figurines!"); 
     println("Press 'Q' to quit and save figurines & rooms!"); 
     break;

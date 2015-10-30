@@ -46,6 +46,8 @@ class Area {//store room spaces to display on screen
     fill(bgCol);
     stroke(lineCol);
     strokeWeight(2);
+    
+    
     p.draw();
   
     /* if(!gen){genShape();}
